@@ -1,0 +1,25 @@
+{
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Login"
+    },
+    "register": {
+      "title": "Register",
+      "username": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Register"
+    },
+    "dashboard": {
+      "welcome": "Welcome to your dashboard",
+      "description": "This is your dashboard home page."
+    }
+  }
+  
