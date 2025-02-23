@@ -1,37 +1,91 @@
-// src/routes/AppRoutes.tsx
 import React, { JSX } from 'react';
-// react-router-dom v6'ya göre importlar
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from '../pages/auth/Login';
-import Register from '../pages/auth/Register';
-// Dashboard sayfası, burada "Home" olarak adlandırılmış
+import LandingPage from '../pages/LandingPage';
 import Home from '../pages/dashboard/Home';
+import Auth from '../pages/Auth';
+import ProfileDetail from '../pages/dashboard/profile/ProfileDetail';
+import RoleGroupManagement from '../pages/dashboard/roles/RoleGroupManagement';
+import Scanner from '../pages/dashboard/scanner/Scanner';
+import ScannerDetails from '../pages/dashboard/scanner/ScannerDetails';
+import SupportTickets from '../pages/dashboard/support/SupportTickets';
+import Users from '../pages/dashboard/users/Users';
+
+
+
 
 // Örnek ProtectedRoute bileşeni (gerçek doğrulama eklenmeli)
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const isAuthenticated = false; // Gerçek oturum kontrolünü burada gerçekleştirin
+  const isAuthenticated = true; // Burada gerçek oturum kontrolünü yapın (örneğin AuthContext üzerinden)
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      {/* Giriş öncesi sayfalar */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      
-      {/* Giriş sonrası korumalı dashboard sayfası */}
-      <Route 
-        path="/dashboard" 
+      {/* Landing Page */}
+      <Route path="/" element={<LandingPage />} />
+
+      {/* Auth Sayfaları */}
+      <Route path="/login" element={<Auth />} />
+
+      {/* Dashboard & Korumalı Sayfalar */}
+      <Route
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
-        } 
+        }
       />
-      
-      {/* Bilinmeyen yollar için yönlendirme */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route
+        path="/profile-detail"
+        element={
+          <ProtectedRoute>
+            <ProfileDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/roles"
+        element={
+          <ProtectedRoute>
+            <RoleGroupManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/scanner"
+        element={
+          <ProtectedRoute>
+            <Scanner />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/scanner-details"
+        element={
+          <ProtectedRoute>
+            <ScannerDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/supports"
+        element={
+          <ProtectedRoute>
+            <SupportTickets />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <Users />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

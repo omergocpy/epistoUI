@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Destek Talepleri - Yanıtlar Tek Sayfa</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Space+Grotesk:wght@400;500;700&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const modalOverlay = document.getElementById("modalOverlay");
+        const ticketModal = document.getElementById("ticketModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        const ticketFormTitle = document.getElementById("ticketFormTitle");
+        const ticketFormBtn = document.getElementById("ticketFormBtn");
+        const ticketId = document.getElementById("ticketId");
+        const ticketSubject = document.getElementById("ticketSubject");
+        const ticketStatus = document.getElementById("ticketStatus");
+        const ticketContent = document.getElementById("ticketContent");
+
+        const ticketRepliesList = document.getElementById("ticketRepliesList");
+        const newReplyTextarea = document.getElementById("newReply");
+        const replySubmitBtn = document.getElementById("replySubmitBtn");
+
+        const repliesData = {
+          "TCK-101": [
+            {
+              user: "admin",
+              message: "Merhaba, problemi detaylandırır mısınız?",
+              time: "Bugün 10:30",
+            },
+          ],
+        };
+
+        function openModal(mode, ticketData) {
+          if (mode === "create") {
+            ticketFormTitle.textContent = "Yeni Talep Oluştur";
+            ticketFormBtn.textContent = "Oluştur";
+
+            ticketId.value = "";
+            ticketSubject.value = "";
+            ticketStatus.value = "Açık";
+            ticketContent.value = "";
+
+            ticketRepliesList.innerHTML = "<p class='text-sm text-[#cb9090]'>Henüz yanıt yok.</p>";
+          } else if (mode === "edit") {
+            ticketFormTitle.textContent = "Talep Görüntüle / Düzenle";
+            ticketFormBtn.textContent = "Kaydet";
+
+            ticketId.value = ticketData.id;
+            ticketSubject.value = ticketData.subject;
+            ticketStatus.value = ticketData.status;
+            ticketContent.value = ticketData.content;
+
+            loadReplies(ticketData.id);
+          }
+
+          modalOverlay.classList.remove("hidden");
+          ticketModal.classList.remove("hidden");
+        }
+
+        function closeModal() {
+          modalOverlay.classList.add("hidden");
+          ticketModal.classList.add("hidden");
+        }
+
+        document.getElementById("newTicketBtn").addEventListener("click", () => {
+          openModal("create");
+        });
+
+        document.querySelectorAll("[data-ticket-open]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const sampleTicketData = {
+              id: "TCK-101",
+              subject: "Oturum açma sorunu",
+              status: "Açık",
+              content: "Sisteme girişte hata alıyorum...",
+            };
+            openModal("edit", sampleTicketData);
+          });
+        });
+
+        closeModalBtn.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", closeModal);
+
+        ticketFormBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          console.log("Kaydedildi:", {
+            id: ticketId.value,
+            subject: ticketSubject.value,
+            status: ticketStatus.value,
+            content: ticketContent.value,
+          });
+          closeModal();
+        });
+
+        replySubmitBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const currentTicketId = ticketId.value;
+          const replyMessage = newReplyTextarea.value.trim();
+          if (!replyMessage || !currentTicketId) return;
+
+          if (!repliesData[currentTicketId]) {
+            repliesData[currentTicketId] = [];
+          }
+
+          repliesData[currentTicketId].push({
+            user: "me", 
+            message: replyMessage,
+            time: "Şimdi", 
+          });
+
+          newReplyTextarea.value = "";
+
+          loadReplies(currentTicketId);
+        });
+
+        function loadReplies(ticketIdStr) {
+          const arr = repliesData[ticketIdStr] || [];
+          if (arr.length === 0) {
+            ticketRepliesList.innerHTML =
+              "<p class='text-sm text-[#cb9090]'>Henüz yanıt yok.</p>";
+            return;
+          }
+
+          let html = "";
+          arr.forEach((r) => {
+            html += `
+              <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
+                <p><strong>${r.user}</strong> <span class="text-xs text-[#cb9090]">(${r.time})</span></p>
+                <p>${r.message}</p>
+              </div>
+            `;
+          });
+          ticketRepliesList.innerHTML = html;
+        }
+      });
+    </script>
+  </head>
+
+  <body class="m-0 p-0 bg-[#231010] text-white"
+    style='font-family: "Space Grotesk","Noto Sans",sans-serif;'>
+
+    <header class="flex items-center justify-between border-b border-[#492222] px-10 py-3">
+      <div class="flex items-center gap-4 text-white">
+          <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                      fill="currentColor"></path>
+              </svg>
+          </div>
+          <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+              Sandbox
+          </h2>
+      </div>
+
+      <div class="flex flex-1 justify-end items-center gap-6">
+          <nav class="flex items-center gap-5">
+              <a href="dashboard.html"
+                  class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Anasayfa</a>
+
+          </nav>
+          <div class="relative group">
+              <button class="text-white text-sm font-medium leading-normal px-2 py-1">
+                  Kullanıcı Paneli
+              </button>
+              <div
+                  class="absolute left-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-48 hidden group-hover:block z-50">
+                  <a href="users.html"
+                      class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Kullanıcılar</a>
+                  <a href="supports.html"
+                      class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Destek</a>
+                  <a href="perms.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Yetkiler</a>
+              </div>
+          </div>
+
+
+          <a href="scanner.html"
+              class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
+              Analizi Başlat
+          </a>
+
+
+          <a href="scanner-details.html"
+              class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
+              Analiz Detayı
+          </a>
+          <div class="relative hidden md:flex items-center">
+              <div class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                      viewBox="0 0 256 256">
+                      <path
+                          d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+                      </path>
+                  </svg>
+              </div>
+              <input type="text" placeholder="Genel Arama"
+                  class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-[#492222] text-white border-[#492222] focus:outline-none" />
+          </div>
+
+          <button
+              class="relative flex items-center justify-center rounded-xl h-10 bg-[#492222] text-white gap-2 text-sm font-bold px-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                  viewBox="0 0 256 256">
+                  <path
+                      d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z">
+                  </path>
+              </svg>
+          </button>
+
+          <div class="relative group">
+              <div class="flex items-center gap-2 cursor-pointer">
+                  <span class="text-sm font-medium">Ali Demir</span>
+                  <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                      style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'>
+                  </div>
+              </div>
+              <div
+                  class="absolute right-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-40 hidden group-hover:block z-50">
+                  <a href="profile-detail.html"
+                      class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Profil Detayı</a>
+                  <a href="login.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Çıkış Yap</a>
+              </div>
+          </div>
+      </div>
+  </header>
+    <div class="px-10 py-5 max-w-[1200px] mx-auto w-full">
+      <h1 class="text-2xl font-bold mb-4">Destek Talepleri</h1>
+      <p class="text-sm text-[#cb9090] mb-6">
+        Kullanıcıların destek taleplerini burada listeleyebilir, yeni talep
+        oluşturabilir veya mevcut talepleri görüntüleyip düzenleyebilirsiniz.
+      </p>
+
+      <div class="overflow-hidden rounded-xl border border-[#683131] bg-[#341818]">
+        <table class="min-w-full border-collapse">
+          <thead class="bg-[#492222]">
+            <tr>
+              <th class="px-4 py-3 text-left text-white text-sm font-medium">
+                Konu
+              </th>
+              <th class="px-4 py-3 text-left text-white text-sm font-medium">
+                Durum
+              </th>
+              <th class="px-4 py-3 text-left text-white text-sm font-medium">
+                Oluşturulma
+              </th>
+              <th class="px-4 py-3 text-left text-white text-sm font-medium">
+                İşlem
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-t border-[#683131]">
+              <td class="px-4 py-2 text-sm">Oturum açma sorunu</td>
+              <td class="px-4 py-2 text-sm">Açık</td>
+              <td class="px-4 py-2 text-sm">1 saat önce</td>
+              <td class="px-4 py-2 text-sm text-[#cb9090] font-bold">
+                <button
+                  data-ticket-open
+                  class="cursor-pointer"
+                >
+                  Görüntüle
+                </button>
+              </td>
+            </tr>
+            <tr class="border-t border-[#683131]">
+              <td class="px-4 py-2 text-sm">Şifre sıfırlayamıyorum</td>
+              <td class="px-4 py-2 text-sm">Yanıtlandı</td>
+              <td class="px-4 py-2 text-sm">3 saat önce</td>
+              <td class="px-4 py-2 text-sm text-[#cb9090] font-bold">
+                <button
+                  data-ticket-open
+                  class="cursor-pointer"
+                >
+                  Görüntüle
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-4">
+        <button
+          id="newTicketBtn"
+          class="inline-flex items-center px-4 py-2 bg-[#f20d0d] text-white text-sm font-bold rounded-xl"
+        >
+          Yeni Talep Oluştur
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="modalOverlay"
+      class="hidden fixed inset-0 bg-black/50 z-40"
+    ></div>
+
+    <div
+      id="ticketModal"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center"
+    >
+      <div
+        class="bg-[#341818] border border-[#683131] rounded-xl p-6 max-w-md w-full mx-4 relative"
+      >
+        <button
+          id="closeModalBtn"
+          class="absolute top-2 right-2 text-white text-sm"
+        >
+          X
+        </button>
+
+        <h2
+          id="ticketFormTitle"
+          class="text-xl font-bold mb-4"
+        >
+          Talep Oluştur / Düzenle
+        </h2>
+
+        <form class="flex flex-col gap-4">
+          <input type="hidden" id="ticketId" />
+
+          <div>
+            <label
+              class="text-sm text-[#cb9090] font-medium block mb-1"
+              >Konu</label
+            >
+            <input
+              type="text"
+              id="ticketSubject"
+              class="form-input w-full bg-[#492222] text-white border border-[#492222] rounded-xl px-3 py-2"
+              placeholder="Örn: Oturum açma sorunu"
+            />
+          </div>
+
+          <div>
+            <label
+              class="text-sm text-[#cb9090] font-medium block mb-1"
+              >Durum</label
+            >
+            <select
+              id="ticketStatus"
+              class="form-select w-full bg-[#492222] text-white border border-[#492222] rounded-xl px-3 py-2"
+            >
+              <option value="Açık">Açık</option>
+              <option value="Yanıtlandı">Yanıtlandı</option>
+              <option value="Kapalı">Kapalı</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              class="text-sm text-[#cb9090] font-medium block mb-1"
+              >Açıklama</label
+            >
+            <textarea
+              id="ticketContent"
+              rows="3"
+              class="form-textarea w-full bg-[#492222] text-white border border-[#492222] rounded-xl px-3 py-2"
+              placeholder="Detayları yazınız..."
+            ></textarea>
+          </div>
+
+          <button
+            id="ticketFormBtn"
+            type="button"
+            class="mt-2 px-4 py-2 bg-[#f20d0d] text-white text-sm font-bold rounded-xl"
+          >
+            Kaydet
+          </button>
+        </form>
+
+        <div class="mt-6 bg-[#492222] p-3 rounded-xl">
+          <h3 class="text-base font-bold mb-2">Yanıtlar</h3>
+          <div id="ticketRepliesList" class="flex flex-col gap-2 mb-3">
+          </div>
+
+          <div>
+            <label for="newReply" class="text-sm text-[#cb9090] font-medium"
+              >Yeni Yanıt</label
+            >
+            <textarea
+              id="newReply"
+              rows="2"
+              class="form-textarea w-full mt-1 bg-[#341818] text-white border border-[#683131] rounded-xl px-2 py-1"
+              placeholder="Bu talebe cevap yazın..."
+            ></textarea>
+          </div>
+          <button
+            id="replySubmitBtn"
+            class="mt-2 px-4 py-1 bg-[#f20d0d] text-white text-sm font-bold rounded-xl"
+          >
+            Gönder
+          </button>
+        </div>
+        <footer
+        class="px-10 py-4 border-t border-[#492222] text-center text-sm text-[#cb9090]"
+      >
+        <p>
+          © 2025 Sandbox Projesi - Tüm Hakları Saklıdır.
+        </p>
+      </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

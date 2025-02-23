@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Kullanıcılar - Modal Örneği</title>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const openModalBtns = document.querySelectorAll("[data-open-modal]");
+      const modal = document.getElementById("userModal");
+      const modalOverlay = document.getElementById("modalOverlay");
+      const closeModalBtn = document.getElementById("modalCloseBtn");
+      const userFormTitle = document.getElementById("userFormTitle");
+      const userFormSubmit = document.getElementById("userFormSubmit");
+
+      function openModal(mode, userData) {
+        if (mode === "create") {
+          userFormTitle.textContent = "Yeni Kullanıcı Ekle";
+          userFormSubmit.textContent = "Oluştur";
+          // Formu sıfırla
+          document.getElementById("userId").value = "";
+          document.getElementById("username").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("role").value = "user";
+          document.getElementById("password").value = "";
+        } else if (mode === "edit") {
+          userFormTitle.textContent = "Kullanıcı Düzenle";
+          userFormSubmit.textContent = "Kaydet";
+          document.getElementById("userId").value = userData.id;
+          document.getElementById("username").value = userData.username;
+          document.getElementById("email").value = userData.email;
+          document.getElementById("role").value = userData.role;
+          document.getElementById("password").value = "";
+        }
+
+        modal.classList.remove("hidden");
+        modalOverlay.classList.remove("hidden");
+      }
+
+      function closeModal() {
+        modal.classList.add("hidden");
+        modalOverlay.classList.add("hidden");
+      }
+
+      document.getElementById("newUserBtn")?.addEventListener("click", () => {
+        openModal("create");
+      });
+
+      openModalBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const userData = {
+            id: "123",
+            username: "ali.demir",
+            email: "ali.demir@example.com",
+            role: "admin",
+          };
+          openModal("edit", userData);
+        });
+      });
+
+      closeModalBtn.addEventListener("click", closeModal);
+      modalOverlay.addEventListener("click", closeModal);
+
+      userFormSubmit.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("Form kaydedildi...");
+        closeModal();
+      });
+    });
+  </script>
+</head>
+
+<body class="m-0 p-0 bg-[#231010] text-white" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+  <header class="flex items-center justify-between border-b border-[#492222] px-10 py-3">
+    <div class="flex items-center gap-4 text-white">
+      <div class="size-4">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+            fill="currentColor"></path>
+        </svg>
+      </div>
+      <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+        Sandbox
+      </h2>
+    </div>
+
+    <div class="flex flex-1 justify-end items-center gap-6">
+      <nav class="flex items-center gap-5">
+        <a href="dashboard.html"
+          class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Anasayfa</a>
+
+      </nav>
+      <div class="relative group">
+        <button class="text-white text-sm font-medium leading-normal px-2 py-1">
+          Kullanıcı Paneli
+        </button>
+        <div
+          class="absolute left-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-48 hidden group-hover:block z-50">
+          <a href="users.html"
+            class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Kullanıcılar</a>
+          <a href="supports.html"
+            class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Destek</a>
+          <a href="perms.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Yetkiler</a>
+        </div>
+      </div>
+
+
+      <a href="scanner.html"
+        class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
+        Analizi Başlat
+      </a>
+
+
+      <a href="scanner-details.html"
+        class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
+        Analiz Detayı
+      </a>
+      <div class="relative hidden md:flex items-center">
+        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+            <path
+              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+            </path>
+          </svg>
+        </div>
+        <input type="text" placeholder="Genel Arama"
+          class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-[#492222] text-white border-[#492222] focus:outline-none" />
+      </div>
+
+      <button
+        class="relative flex items-center justify-center rounded-xl h-10 bg-[#492222] text-white gap-2 text-sm font-bold px-2.5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+          <path
+            d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z">
+          </path>
+        </svg>
+      </button>
+
+      <div class="relative group">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <span class="text-sm font-medium">Ali Demir</span>
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+            style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'>
+          </div>
+        </div>
+        <div
+          class="absolute right-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-40 hidden group-hover:block z-50">
+          <a href="profile-detail.html"
+            class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Profil Detayı</a>
+          <a href="login.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Çıkış Yap</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="px-10 py-5 max-w-[1200px] mx-auto w-full">
+    <h1 class="text-2xl font-bold mb-4">Kullanıcılar</h1>
+    <p class="text-sm text-[#cb9090] mb-6">
+      Sistemdeki tüm kullanıcıların listesi.
+    </p>
+
+    <div class="overflow-hidden rounded-xl border border-[#683131] bg-[#341818]">
+      <table class="min-w-full border-collapse">
+        <thead class="bg-[#492222]">
+          <tr>
+            <th class="px-4 py-3 text-left text-white text-sm font-medium">
+              Kullanıcı Adı
+            </th>
+            <th class="px-4 py-3 text-left text-white text-sm font-medium">
+              E-Posta
+            </th>
+            <th class="px-4 py-3 text-left text-white text-sm font-medium">
+              Rol
+            </th>
+            <th class="px-4 py-3 text-left text-white text-sm font-medium">
+              İşlem
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-[#683131]">
+            <td class="px-4 py-2 text-sm">ali.demir</td>
+            <td class="px-4 py-2 text-sm">ali.demir@example.com</td>
+            <td class="px-4 py-2 text-sm">Yönetici</td>
+            <td class="px-4 py-2 text-sm text-[#cb9090] font-bold cursor-pointer">
+              <button data-open-modal> Düzenle </button>
+            </td>
+          </tr>
+          <tr class="border-t border-[#683131]">
+            <td class="px-4 py-2 text-sm">ayse.kara</td>
+            <td class="px-4 py-2 text-sm">ayse.kara@example.com</td>
+            <td class="px-4 py-2 text-sm">Kullanıcı</td>
+            <td class="px-4 py-2 text-sm text-[#cb9090] font-bold cursor-pointer">
+              <button data-open-modal> Düzenle </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4">
+      <button id="newUserBtn"
+        class="inline-flex items-center px-4 py-2 bg-[#f20d0d] text-white text-sm font-bold rounded-xl">
+        Yeni Kullanıcı Ekle
+      </button>
+    </div>
+  </div>
+
+  <div id="modalOverlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
+
+  <div id="userModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+    <div class="bg-[#341818] border border-[#683131] rounded-xl p-6 max-w-md w-full mx-4 relative">
+      <button id="modalCloseBtn" class="absolute top-2 right-2 text-white text-sm">
+        X
+      </button>
+
+      <h2 id="userFormTitle" class="text-xl font-bold mb-4">
+        Kullanıcı Ekle / Düzenle
+      </h2>
+
+      <form class="flex flex-col gap-4">
+        <input type="hidden" id="userId" name="userId" value="" />
+
+        <div>
+          <label class="text-sm text-[#cb9090] font-medium block mb-1">Kullanıcı Adı</label>
+          <input type="text" id="username"
+            class="form-input w-full bg-[#492222] text-white border border-[#492222] rounded-xl focus:outline-none px-3 py-2"
+            placeholder="ali.demir" />
+        </div>
+
+        <div>
+          <label class="text-sm text-[#cb9090] font-medium block mb-1">E-Posta</label>
+          <input type="email" id="email"
+            class="form-input w-full bg-[#492222] text-white border border-[#492222] rounded-xl px-3 py-2"
+            placeholder="ali.demir@example.com" />
+        </div>
+
+        <div>
+          <label class="text-sm text-[#cb9090] font-medium block mb-1">Rol</label>
+          <select id="role"
+            class="form-select w-full bg-[#492222] text-white border border-[#492222] rounded-xl px-3 py-2">
+            <option value="user">Kullanıcı</option>
+            <option value="admin">Yönetici</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-sm text-[#cb9090] font-medium block mb-1">Şifre</label>
+          <input type="password" id="password"
+            class="form-input w-full bg-[#492222] text-white border border-[#492222] rounded-xl px-3 py-2"
+            placeholder="******" />
+        </div>
+
+        <button id="userFormSubmit" type="button"
+          class="mt-2 px-4 py-2 bg-[#f20d0d] text-white text-sm font-bold rounded-xl">
+          Kaydet
+        </button>
+      </form>
+      <footer
+      class="px-10 py-4 border-t border-[#492222] text-center text-sm text-[#cb9090]"
+    >
+      <p>
+        © 2025 Sandbox Projesi - Tüm Hakları Saklıdır.
+      </p>
+    </footer>
+    </div>
+  </div>
+
+</body>
+
+</html>

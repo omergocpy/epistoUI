@@ -1,0 +1,51 @@
+"id": 1,
+            "name": "SB_cuckoo1",
+            "label": "SB_cuckoo1",
+            "arch": "x64",
+            "platform": "windows",
+            "interface": "ens35",
+
+------------------
+  {
+  "id": 260,
+  "target": "/tmp/cuckoo-tmp/upload_kxju0i3v/calc.exe",
+  "category": "file",
+  "cape": "",
+  "custom": "",
+  "machine": "SB_cuckoo1",
+  "package": "exe",
+  "route": "inetsim",
+  "platform": "windows",
+  "clock": "2025-02-16 11:10:39",
+  "added_on": "2025-02-16 11:10:40",
+  "started_on": "2025-02-16 14:10:40",
+  "completed_on": "2025-02-16 14:19:25",
+  "status": "reported",
+  "timedout": false,
+  "tags": [
+    "x64"
+  ],
+  "guest": {
+    "id": 202,
+    "status": "stopping",
+    "name": "SB_cuckoo1",
+    "label": "SB_cuckoo1",
+    "platform": "windows",
+    "manager": "ESX",
+    "started_on": "2025-02-16 14:10:40",
+    "shutdown_on": "2025-02-16 14:19:24",
+    "task_id": 260
+  },
+  "errors": [],
+  "sample": {
+    "id": 1,
+    "file_size": 27648,
+    "file_type": "PE32+ executable (GUI) x86-64, for MS Windows",
+    "md5": "5da8c98136d98dfec4716edd79c7145f",
+    "crc32": "DF505C22",
+    "sha1": "ed13af4a0a754b8daee4929134d2ff15ebe053cd",
+    "sha256": "58189cbd4e6dc0c7d8e66b6a6f75652fc9f4afc7ce0eba7d67d8c3feb0d5381f",
+    "sha512": "6e2b067760ec178cdcc4df04c541ce6940fc2a0cdd36f57f4d6332e38119dbc5e24eb67c11d2c8c8ffeed43533c2dd8b642d2c7c997c392928091b5ccce7582a",
+    "ssdeep": "384:Otj8FKzuRxmeWCJxhd2WS/YWyiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiLiiiB:QXif4CbPQ7"
+  }
+}

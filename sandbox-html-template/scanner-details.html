@@ -1,0 +1,517 @@
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700" />
+  <title>Sandbox Detay - Any.Run &amp; Threat.Zone Örnekleri</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabButtons = document.querySelectorAll("[data-tab-btn]");
+      const tabPanels = document.querySelectorAll("[data-tab-panel]");
+      tabButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          tabButtons.forEach((b) => {
+            b.classList.remove("border-b-[#f20d0d]", "text-white");
+            b.classList.add("text-[#cb9090]");
+          });
+          btn.classList.remove("text-[#cb9090]");
+          btn.classList.add("border-b-[#f20d0d]", "text-white");
+
+          tabPanels.forEach((p) => p.classList.add("hidden"));
+          const target = btn.getAttribute("data-tab-btn");
+          const panel = document.querySelector(`[data-tab-panel="${target}"]`);
+          if (panel) {
+            panel.classList.remove("hidden");
+          }
+        });
+      });
+
+      const accordions = document.querySelectorAll("[data-accordion]");
+      accordions.forEach((acc) => {
+        const header = acc.querySelector("[data-acc-header]");
+        const body = acc.querySelector("[data-acc-body]");
+        header.addEventListener("click", () => {
+          body.classList.toggle("hidden");
+        });
+      });
+    });
+  </script>
+</head>
+
+<body class="m-0 p-0" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+  <div class="relative flex min-h-screen flex-col bg-[#231010] overflow-x-hidden">
+    <header class="flex items-center justify-between border-b border-[#492222] px-10 py-3">
+      <div class="flex items-center gap-4 text-white">
+        <div class="size-4">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+              fill="currentColor"></path>
+          </svg>
+        </div>
+        <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+          Sandbox
+        </h2>
+      </div>
+
+      <div class="flex flex-1 justify-end items-center gap-6">
+        <nav class="flex items-center gap-5">
+          <a href="dashboard.html"
+            class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Anasayfa</a>
+
+        </nav>
+        <div class="relative group">
+          <button class="text-white text-sm font-medium leading-normal px-2 py-1">
+            Kullanıcı Paneli
+          </button>
+          <div
+            class="absolute left-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-48 hidden group-hover:block z-50">
+            <a href="users.html"
+              class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Kullanıcılar</a>
+            <a href="supports.html"
+              class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Destek</a>
+            <a href="perms.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Yetkiler</a>
+          </div>
+        </div>
+
+
+        <a href="scanner.html"
+          class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
+          Analizi Başlat
+        </a>
+
+
+        <a href="scanner-details.html"
+          class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
+          Analiz Detayı
+        </a>
+        <div class="relative hidden md:flex items-center">
+          <div class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+              <path
+                d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+              </path>
+            </svg>
+          </div>
+          <input type="text" placeholder="Genel Arama"
+            class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-[#492222] text-white border-[#492222] focus:outline-none" />
+        </div>
+
+        <button
+          class="relative flex items-center justify-center rounded-xl h-10 bg-[#492222] text-white gap-2 text-sm font-bold px-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+            <path
+              d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z">
+            </path>
+          </svg>
+        </button>
+
+        <div class="relative group">
+          <div class="flex items-center gap-2 cursor-pointer">
+            <span class="text-sm font-medium">Ali Demir</span>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'>
+            </div>
+          </div>
+          <div
+            class="absolute right-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-40 hidden group-hover:block z-50">
+            <a href="profile-detail.html"
+              class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Profil Detayı</a>
+            <a href="login.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Çıkış Yap</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="px-10 py-5 flex-1 flex flex-col max-w-[1200px] mx-auto w-full">
+      <div class="flex justify-between items-center flex-wrap gap-3">
+        <div class="flex flex-col">
+          <p class="text-white text-2xl font-bold">Rapor #ANYRUN-20230101</p>
+          <p class="text-[#cb9090] text-sm">
+            (Örnek veri - Any.Run benzeri) - 2 saat önce gönderildi
+          </p>
+        </div>
+        <div class="flex gap-2 items-center">
+          <p class="text-white text-sm">
+            Makine:
+            <span class="text-[#cb9090]">Win10-64 (Threat.Zone Örnek)</span>
+          </p>
+          <p class="text-white text-sm">
+            Kategori:
+            <span class="text-[#cb9090]">Suspicious .exe</span>
+          </p>
+          <button
+            class="flex items-center justify-center h-8 px-4 rounded-xl bg-[#492222] text-white text-sm font-medium">
+            Tekrar Analiz
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 border-b border-[#683131]">
+        <div class="flex gap-6 text-[#cb9090]">
+          <button class="pb-2 border-b-2 border-b-[#f20d0d] text-white" data-tab-btn="overview">
+            Genel Bakış
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="file">
+            Dosya
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="pe">
+            PE Bilgisi
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="yara">
+            Yara &amp; Cape
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="network">
+            Ağ
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="behavior">
+            Davranış
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="extra">
+            Ekstra
+          </button>
+          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="screenshots">
+            Ekran Görüntüleri
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 flex-1">
+        <div data-tab-panel="overview" class="block">
+          <h3 class="text-white text-lg font-bold mb-3">Risk ve Özeti</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-[#341818] border border-[#683131] rounded-xl p-4 flex flex-col gap-2">
+              <p class="text-white text-base font-bold">malscore</p>
+              <p class="text-[#cb9090] text-sm">
+                9.2 (Threat.Zone - Tespit seviyesi)
+              </p>
+            </div>
+            <div class="bg-[#341818] border border-[#683131] rounded-xl p-4 flex flex-col gap-2">
+              <p class="text-white text-base font-bold">malstatus</p>
+              <p class="text-[#cb9090] text-sm">Malicious</p>
+            </div>
+            <div class="bg-[#341818] border border-[#683131] rounded-xl p-4 flex flex-col gap-2">
+              <p class="text-white text-base font-bold">Suricata (#59)</p>
+              <p class="text-[#cb9090] text-sm">
+                Any.Run - Kural eşleşmesi (Network Exploit)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div data-tab-panel="file" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">Dosya Bilgisi</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-sm text-[#cb9090] font-medium">Name</p>
+              <p class="text-white text-base font-bold">
+                suspicious_setup.exe
+              </p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-sm text-[#cb9090] font-medium">Size</p>
+              <p class="text-white text-base font-bold">1.1 MB</p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-sm text-[#cb9090] font-medium">CRC32</p>
+              <p class="text-white text-base font-bold">0x8FAB1234</p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-sm text-[#cb9090] font-medium">MD5</p>
+              <p class="text-white text-base font-bold">abc1234def5678...</p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-sm text-[#cb9090] font-medium">SHA256</p>
+              <p class="text-white text-base font-bold">
+                0123abcd...ffedcba9898...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div data-tab-panel="pe" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">
+            PE Bilgisi (Any.Run Örneği)
+          </h3>
+          <div class="flex flex-col gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-[#341818] p-4 rounded-xl border border-[#683131]">
+                <p class="text-sm text-[#cb9090] font-medium">EntryPoint</p>
+                <p class="text-white text-base font-bold">0x401200</p>
+              </div>
+              <div class="bg-[#341818] p-4 rounded-xl border border-[#683131]">
+                <p class="text-sm text-[#cb9090] font-medium">ep_bytes</p>
+                <p class="text-white text-base font-bold">E9 4E 00 ...</p>
+              </div>
+              <div class="bg-[#341818] p-4 rounded-xl border border-[#683131]">
+                <p class="text-sm text-[#cb9090] font-medium">OS Version</p>
+                <p class="text-white text-base font-bold">6.3 (Win8.1+)</p>
+              </div>
+            </div>
+
+            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
+              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
+                <p class="text-white text-sm font-bold">Imports</p>
+                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
+              </div>
+              <div class="hidden px-4 pb-3" data-acc-body>
+                <ul class="list-disc list-inside text-white text-sm">
+                  <li>mscoree.dll</li>
+                  <li>advapi32.dll</li>
+                  <li>ws2_32.dll</li>
+                </ul>
+              </div>
+            </div>
+
+            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
+              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
+                <p class="text-white text-sm font-bold">Exports</p>
+                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
+              </div>
+              <div class="hidden px-4 pb-3" data-acc-body>
+                <ul class="list-decimal list-inside text-white text-sm">
+                  <li>DllEntryPoint</li>
+                  <li>PluginMain</li>
+                </ul>
+              </div>
+            </div>
+
+            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
+              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
+                <p class="text-white text-sm font-bold">Sections</p>
+                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
+              </div>
+              <div class="hidden px-4 pb-3 flex flex-col gap-2" data-acc-body>
+                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
+                  <p>Name: <span class="text-[#cb9090]">.text</span></p>
+                  <p>Entropy: <span class="text-[#cb9090]">6.32</span></p>
+                  <p>Characteristics: <span class="text-[#cb9090]">0x60000020</span></p>
+                </div>
+                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
+                  <p>Name: <span class="text-[#cb9090]">.data</span></p>
+                  <p>Entropy: <span class="text-[#cb9090]">5.12</span></p>
+                  <p>Characteristics: <span class="text-[#cb9090]">0xC0000040</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
+              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
+                <p class="text-white text-sm font-bold">Resources</p>
+                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
+              </div>
+              <div class="hidden px-4 pb-3" data-acc-body>
+                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
+                  <p>Name: <span class="text-[#cb9090]">ICON</span></p>
+                  <p>Language: <span class="text-[#cb9090]">1033</span></p>
+                  <p>Entropy: <span class="text-[#cb9090]">4.22</span></p>
+                </div>
+              </div>
+            </div>
+
+            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
+              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
+                <p class="text-white text-sm font-bold">VersionInfo</p>
+                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
+              </div>
+              <div class="hidden px-4 pb-3" data-acc-body>
+                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
+                  <p>Name: <span class="text-[#cb9090]">FileVersion</span></p>
+                  <p>Value: <span class="text-[#cb9090]">2.0.0.1</span></p>
+                </div>
+                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
+                  <p>Name: <span class="text-[#cb9090]">CompanyName</span></p>
+                  <p>Value: <span class="text-[#cb9090]">Malicious Inc.</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-tab-panel="yara" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">
+            Yara / Cape Yara Örnekleri
+          </h3>
+          <div class="flex flex-col gap-4">
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">
+                Yara Kural: <span class="text-[#cb9090]">TrojanDownloader</span>
+              </p>
+              <p class="text-white text-sm">
+                Strings:
+                <span class="text-[#cb9090]">["$a = 'http://malicious.com/dl'", "$b = 'PE'"]</span>
+              </p>
+              <p class="text-white text-sm">
+                Adresler:
+                <span class="text-[#cb9090]">["0x405000", "0x405050"]</span>
+              </p>
+              <p class="text-white text-sm">
+                Meta.desc:
+                <span class="text-[#cb9090]">İçerik indirerek sistemde çalıştıran trojan.</span>
+              </p>
+            </div>
+
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">
+                Cape Yara: <span class="text-[#cb9090]">RansomCape</span>
+              </p>
+              <p class="text-white text-sm">
+                Cape Type:
+                <span class="text-[#cb9090]">Ransom/AnyRun-Check</span>
+              </p>
+              <p class="text-white text-sm">
+                Strings:
+                <span class="text-[#cb9090]">["cape_str_rand", "enc_key= 'AES256'"]</span>
+              </p>
+              <p class="text-white text-sm">
+                Addresses:
+                <span class="text-[#cb9090]">["0x501000"]</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div data-tab-panel="network" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">Ağ Aktiviteleri</h3>
+          <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+            <p class="text-white text-sm font-bold mb-2">
+              (Threat.Zone Örneği)
+            </p>
+            <p class="text-white text-sm">
+              Hosts IP:
+              <span class="text-[#cb9090]">8.8.8.8, 34.34.34.10 (ülke: US, tahmini)</span>
+            </p>
+            <p class="text-white text-sm">
+              Dead Hosts:
+              <span class="text-[#cb9090]">192.168.56.101 (LAN tarama başarısız)</span>
+            </p>
+            <p class="text-white text-sm">
+              Domains:
+              <span class="text-[#cb9090]">["malicious.com","example.org"]</span>
+            </p>
+          </div>
+        </div>
+
+        <div data-tab-panel="behavior" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">
+            Davranış Kayıtları (Any.Run Örneği)
+          </h3>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-4 bg-[#231010] px-4 py-2 justify-between">
+              <div class="flex flex-col">
+                <p class="text-white text-sm font-medium">
+                  CreateProcess -> powershell.exe
+                </p>
+                <p class="text-[#cb9090] text-xs">~1 saat önce</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-[#231010] px-4 py-2 justify-between">
+              <div class="flex flex-col">
+                <p class="text-white text-sm font-medium">
+                  CopyFile -> C:\Users\Public\mal.dll
+                </p>
+                <p class="text-[#cb9090] text-xs">~45 dk önce</p>
+              </div>
+            </div>
+
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl mt-4">
+              <p class="text-white text-sm font-bold">debug.log</p>
+              <p class="text-[#cb9090] text-sm">
+                “RDP oturumu kapatıldı - normal sonlanma. 0x00.” (Threat.Zone
+                raporu)
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div data-tab-panel="extra" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">
+            Ekstra Bilgiler (Any.Run &amp; Threat.Zone Örnek)
+          </h3>
+          <div class="flex flex-col gap-4">
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">Detection Family</p>
+              <p class="text-[#cb9090] text-sm">
+                Trojan.Win32.CryptoRansom
+              </p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">.dotnet</p>
+              <p class="text-[#cb9090] text-sm">No .NET metadata found</p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">die</p>
+              <p class="text-[#cb9090] text-sm">
+                PE32+ console - MS Visual C++ 2015
+              </p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">
+                selfextract.de4dot.extracted_files
+              </p>
+              <ul class="list-disc list-inside text-white text-sm">
+                <li>payload.dll</li>
+                <li>key.dat</li>
+              </ul>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">procdump</p>
+              <p class="text-[#cb9090] text-sm">
+                “2 adet dump oluşturuldu.” (Threat.Zone)
+              </p>
+            </div>
+            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
+              <p class="text-white text-base font-bold">CAPE[*].? ek verisi</p>
+              <p class="text-[#cb9090] text-sm">
+                Suspicious injection algılaması (CAPE - Example)
+              </p>
+            </div>
+          </div>
+        </div>
+        <div data-tab-panel="screenshots" class="hidden">
+          <h3 class="text-white text-lg font-bold mb-3">Tarama Ekran Görüntüleri</h3>
+          <p class="text-[#cb9090] text-sm mb-3">
+            Burada tarama sırasında alınan ekran görüntüleri görüntülenecektir.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="bg-[#341818] border border-[#683131] rounded-xl p-2">
+              <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 1"
+                class="w-full h-auto rounded-md" />
+              <p class="text-sm text-white mt-2">
+                Ekran görüntüsü #1 açıklaması
+              </p>
+            </div>
+
+            <div class="bg-[#341818] border border-[#683131] rounded-xl p-2">
+              <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 2"
+                class="w-full h-auto rounded-md" />
+              <p class="text-sm text-white mt-2">
+                Ekran görüntüsü #2 açıklaması
+              </p>
+            </div>
+
+            <div class="bg-[#341818] border border-[#683131] rounded-xl p-2">
+              <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 3"
+                class="w-full h-auto rounded-md" />
+              <p class="text-sm text-white mt-2">
+                Ekran görüntüsü #3 açıklaması
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <footer class="px-10 py-4 border-t border-[#492222] text-center text-sm text-[#cb9090]">
+        <p>
+          © 2025 Sandbox Projesi - Tüm Hakları Saklıdır.
+        </p>
+      </footer>
+    </div>
+  </div>
+</body>
+
+</html>

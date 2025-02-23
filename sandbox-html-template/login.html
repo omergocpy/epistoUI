@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard Auth</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-[#231010]" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+    
+    <div id="login" class="auth-container w-full max-w-md bg-[#492222] p-8 rounded-xl shadow-lg text-white fade-in">
+        <h1 class="text-center text-2xl font-bold mb-6">Tekrar Hoş Geldiniz</h1>
+        <p class="text-center text-sm mb-6">Devam etmek için hesabınıza giriş yapın</p>
+        
+        <form>
+            <label class="block mb-4">
+                <span class="text-base font-medium">E-posta</span>
+                <input type="email" placeholder="E-postanızı girin" class="w-full p-3 rounded-xl bg-[#cb9090] text-white border-none placeholder-white focus:outline-none">
+            </label>
+            
+            <label class="block mb-4 relative">
+                <span class="text-base font-medium">Şifre</span>
+                <input id="password" type="password" placeholder="Şifrenizi girin" class="w-full p-3 rounded-xl bg-[#cb9090] text-white border-none placeholder-white focus:outline-none">
+                <button type="button" class="absolute right-4 top-9 text-white" onclick="togglePassword()">👁️</button>
+            </label>
+            
+            <button type="submit" class="w-full bg-[#f20d0d] p-3 rounded-xl font-bold text-white">Giriş Yap</button>
+        </form>
+        
+        <p class="text-center text-sm mt-4"><a href="#" onclick="showPage('forgot')" class="underline">Şifrenizi mi unuttunuz?</a></p>
+        <p class="text-center text-sm mt-2"><a href="#" onclick="showPage('register')" class="underline">Hesabınız yok mu? Kayıt olun</a></p>
+    </div>
+    
+    <div id="register" class="auth-container w-full max-w-md bg-[#492222] p-8 rounded-xl shadow-lg text-white fade-in hidden">
+        <h1 class="text-center text-2xl font-bold mb-6">Hesap Oluştur</h1>
+        <p class="text-center text-sm mb-6">Hizmetlerimizi kullanmaya başlamak için kaydolun</p>
+        
+        <form>
+            <label class="block mb-4">
+                <span class="text-base font-medium">Email</span>
+                <input type="email" placeholder="Enter your email" class="w-full p-3 rounded-xl bg-[#cb9090] text-white border-none placeholder-white focus:outline-none">
+            </label>
+            
+            <label class="block mb-4 relative">
+                <span class="text-base font-medium">Password</span>
+                <input id="register-password" type="password" placeholder="Enter your password" class="w-full p-3 rounded-xl bg-[#cb9090] text-white border-none placeholder-white focus:outline-none">
+                <button type="button" class="absolute right-4 top-9 text-white" onclick="togglePassword('register-password')">👁️</button>
+            </label>
+            
+            <button type="submit" class="w-full bg-[#f20d0d] p-3 rounded-xl font-bold text-white">Kayıt Ol</button>
+        </form>
+        
+        <p class="text-center text-sm mt-4"><a href="#" onclick="showPage('login')" class="underline">Zaten bir hesabınız var mı? Giriş yapın</a></p>
+    </div>
+    
+    <div id="forgot" class="auth-container w-full max-w-md bg-[#492222] p-8 rounded-xl shadow-lg text-white fade-in hidden">
+        <h1 class="text-center text-2xl font-bold mb-6">Şifrenizi Sıfırlayın</h1>
+        <p class="text-center text-sm mb-6">Şifre sıfırlama talimatlarını almak için e-postanızı girin</p>
+        
+        <form>
+            <label class="block mb-4">
+                <span class="text-base font-medium">Email</span>
+                <input type="email" placeholder="Enter your email" class="w-full p-3 rounded-xl bg-[#cb9090] text-white border-none placeholder-white focus:outline-none">
+            </label>
+            
+            <button type="submit" class="w-full bg-[#f20d0d] p-3 rounded-xl font-bold text-white">Sıfırlama Bağlantısını Gönder</button>
+        </form>
+        
+        <p class="text-center text-sm mt-4"><a href="#" onclick="showPage('login')" class="underline">Giriş sayfasına dön</a></p>
+    </div>
+    
+    <script>
+        function togglePassword(id = "password") {
+            let passField = document.getElementById(id);
+            if (passField.type === "password") {
+                passField.type = "text";
+            } else {
+                passField.type = "password";
+            }
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll(".auth-container").forEach(el => el.classList.add("hidden"));
+            document.getElementById(pageId).classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>

@@ -1,25 +1,29 @@
 {
-    "login": {
-      "title": "Login",
-      "email": "Email",
-      "emailPlaceholder": "Enter your email",
-      "password": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "submit": "Login"
-    },
-    "register": {
-      "title": "Register",
-      "username": "Username",
-      "usernamePlaceholder": "Enter your username",
-      "email": "Email",
-      "emailPlaceholder": "Enter your email",
-      "password": "Password",
-      "passwordPlaceholder": "Enter your password",
-      "submit": "Register"
-    },
-    "dashboard": {
-      "welcome": "Welcome to your dashboard",
-      "description": "This is your dashboard home page."
-    }
+  "login": {
+    "title": "Welcome Back",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Log In"
+  },
+  "register": {
+    "title": "Create Account",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Register"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "welcome": "Welcome, {name}!",
+    "intro": "This is your dashboard. Here you can view updates, manage your account, and more.",
+    "footer": "© 2025 My React App. All rights reserved."
   }
-  
+}

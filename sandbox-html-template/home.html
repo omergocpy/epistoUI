@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sandbox - Ana Sayfa (Tanıtım)</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?display=swap&family=Space+Grotesk:wght@400;500;700&family=Noto+Sans:wght@400;500;700;900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body class="bg-[#231010] text-white m-0 p-0" style='font-family: "Space Grotesk","Noto Sans",sans-serif;'>
+
+    <nav class="flex items-center justify-between px-10 py-3 border-b border-[#492222]">
+      <div class="flex items-center gap-3 text-white">
+        <div class="w-8 h-8">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-full h-full"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">
+          Sandbox
+        </h2>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="login.html" class="text-sm font-medium">Giriş Yap</a>
+        <a
+        href="#"
+        class="px-4 py-2 bg-[#f20d0d] rounded-xl text-sm font-bold hover:bg-[#e10c0c]"
+      >
+        Kayıt Ol
+      </a>
+      </div>
+    </nav>
+
+    <section
+      class="relative flex flex-col md:flex-row items-center justify-center md:justify-between px-10 py-16"
+    >
+      <div class="md:w-1/2 flex flex-col gap-4">
+        <h1 class="text-3xl md:text-4xl font-extrabold leading-tight">
+          Sandbox ile Dosyalarınızı <br class="hidden md:block"/> Güvenle Analiz Edin
+        </h1>
+        <p class="text-sm text-[#cb9090]">
+          Zararlı yazılımları tespit etmek, davranışlarını izlemek ve ağ
+          trafiğini incelemek için gelişmiş bir sanallaştırma ortamı.
+        </p>
+        <div class="flex gap-3 mt-4">
+          <button
+            class="bg-[#492222] hover:bg-[#683131] text-sm font-bold px-4 py-2 rounded-xl"
+          >
+            Daha Fazla Bilgi
+          </button>
+          <button
+            class="bg-[#f20d0d] hover:bg-[#e10c0c] text-sm font-bold px-4 py-2 rounded-xl animate-pulse"
+          >
+            Şimdi Başlayın
+          </button>
+        </div>
+      </div>
+
+      <div class="md:w-1/2 flex justify-center mt-8 md:mt-0">
+        <div
+          class="relative w-48 h-48 bg-[#341818] rounded-full flex items-center justify-center animate-bounce"
+        >
+          <svg
+            class="w-24 h-24 animate-spin text-[#f20d0d]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="px-10 py-8 bg-[#341818] border-y border-[#492222] flex flex-col gap-8"
+    >
+      <h2 class="text-2xl font-bold">Neden Sandbox?</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-[#492222] p-4 rounded-xl flex flex-col gap-2">
+          <h3 class="text-lg font-bold">Güvenlik</h3>
+          <p class="text-sm text-[#cb9090]">
+            Dosyalarınızı izole bir ortamda çalıştırarak sistemi korur.
+          </p>
+        </div>
+        <div class="bg-[#492222] p-4 rounded-xl flex flex-col gap-2">
+          <h3 class="text-lg font-bold">Detaylı Analiz</h3>
+          <p class="text-sm text-[#cb9090]">
+            Davranışsal loglar, API çağrıları ve ağ trafiği derinlemesine incelenir.
+          </p>
+        </div>
+        <div class="bg-[#492222] p-4 rounded-xl flex flex-col gap-2">
+          <h3 class="text-lg font-bold">Kolay Kullanım</h3>
+          <p class="text-sm text-[#cb9090]">
+            Sürükle-bırak veya tek tıkla analiz başlatma, sonuçlara hızlı erişim.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer
+      class="px-10 py-4 border-t border-[#492222] text-center text-sm text-[#cb9090]"
+    >
+      <p>
+        © 2025 Sandbox Projesi - Tüm Hakları Saklıdır.
+      </p>
+    </footer>
+  </body>
+</html>

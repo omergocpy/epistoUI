@@ -1,25 +1,29 @@
 {
-    "login": {
-      "title": "Giriş Yap",
-      "email": "E-posta",
-      "emailPlaceholder": "E-posta adresinizi girin",
-      "password": "Şifre",
-      "passwordPlaceholder": "Şifrenizi girin",
-      "submit": "Giriş Yap"
-    },
-    "register": {
-      "title": "Kayıt Ol",
-      "username": "Kullanıcı Adı",
-      "usernamePlaceholder": "Kullanıcı adınızı girin",
-      "email": "E-posta",
-      "emailPlaceholder": "E-posta adresinizi girin",
-      "password": "Şifre",
-      "passwordPlaceholder": "Şifrenizi girin",
-      "submit": "Kayıt Ol"
-    },
-    "dashboard": {
-      "welcome": "Dashboard'a Hoş Geldiniz",
-      "description": "Burası, giriş sonrası dashboard ana sayfanızdır."
-    }
+  "login": {
+    "title": "Tekrar Hoş Geldiniz",
+    "email": "E-posta",
+    "emailPlaceholder": "E-postanızı girin",
+    "password": "Şifre",
+    "passwordPlaceholder": "Şifrenizi girin",
+    "submit": "Giriş Yap"
+  },
+  "register": {
+    "title": "Hesap Oluştur",
+    "username": "Kullanıcı Adı",
+    "usernamePlaceholder": "Kullanıcı adınızı girin",
+    "email": "E-posta",
+    "emailPlaceholder": "E-postanızı girin",
+    "password": "Şifre",
+    "passwordPlaceholder": "Şifrenizi girin",
+    "submit": "Kayıt Ol"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "home": "Anasayfa",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "welcome": "Hoş Geldiniz, {name}!",
+    "intro": "Bu sizin dashboard'unuz. Buradan güncellemeleri görüntüleyebilir, hesabınızı yönetebilir ve daha fazlasını yapabilirsiniz.",
+    "footer": "© 2025 My React App. Tüm hakları saklıdır."
   }
-  
+}

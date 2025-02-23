@@ -1,0 +1,42 @@
+epistoUI/
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── src
+    ├── assets
+    │   └── react.svg
+    ├── components
+    │   ├── common
+    │   │   └── Loading.tsx
+    │   ├── Footer.tsx
+    │   └── Header.tsx
+    ├── context
+    │   ├── AppContext.tsx
+    │   └── LoadingContext.tsx
+    ├── i18n
+    │   ├── en.json
+    │   ├── index.ts
+    │   └── tr.json
+    ├── pages
+    │   ├── auth
+    │   │   ├── Login.tsx
+    │   │   └── Register.tsx
+    │   └── dashboard
+    │       └── Home.tsx
+    ├── routes
+    │   └── AppRoutes.tsx
+    ├── services
+    │   ├── api.ts
+    │   └── authService.ts
+    ├── styles
+    │   └── global.css
+    ├── App.tsx
+    ├── main.tsx
+    └── vite-env.d.ts
