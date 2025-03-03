@@ -11,11 +11,8 @@ import SupportTickets from '../pages/dashboard/support/SupportTickets';
 import Users from '../pages/dashboard/users/Users';
 
 
-
-
-// Örnek ProtectedRoute bileşeni (gerçek doğrulama eklenmeli)
 const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const isAuthenticated = true; // Burada gerçek oturum kontrolünü yapın (örneğin AuthContext üzerinden)
+  const isAuthenticated = true; 
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
@@ -62,13 +59,14 @@ const AppRoutes: React.FC = () => {
         }
       />
       <Route
-        path="/scanner-details"
+        path="/scanner-details/:id"
         element={
           <ProtectedRoute>
             <ScannerDetails />
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/supports"
         element={

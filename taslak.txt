@@ -32,9 +32,8 @@ epistoUI/
     │       └── Home.tsx
     ├── routes
     │   └── AppRoutes.tsx
-    ├── services
-    │   ├── api.ts
-    │   └── authService.ts
+    ├── api
+    │   ├── OpenAPI Generator.
     ├── styles
     │   └── global.css
     ├── App.tsx
