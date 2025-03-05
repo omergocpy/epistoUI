@@ -1,517 +1,884 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700" />
-  <title>Sandbox Detay - Any.Run &amp; Threat.Zone Örnekleri</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metaverse Sandbox - Analiz Detayları</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#8A2BE2',
+                            dark: '#5D1E9E',
+                            light: '#9F6EF6'
+                        },
+                        secondary: {
+                            DEFAULT: '#B026FF',
+                            dark: '#7A1BB2',
+                        },
+                        dark: {
+                            DEFAULT: '#0F0921',
+                            light: '#1B1139',
+                            medium: '#140C2E',
+                        },
+                        light: {
+                            DEFAULT: '#F8F9FE',
+                            purple: '#EADCFE',
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'scan-line': 'scanLine 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        glow: {
+                            '0%': { 
+                                boxShadow: '0 0 5px rgba(138, 43, 226, 0.5), 0 0 10px rgba(138, 43, 226, 0.3)', 
+                                borderColor: 'rgba(138, 43, 226, 0.5)'
+                            },
+                            '100%': { 
+                                boxShadow: '0 0 15px rgba(138, 43, 226, 0.7), 0 0 30px rgba(138, 43, 226, 0.5)', 
+                                borderColor: 'rgba(138, 43, 226, 0.8)'
+                            }
+                        },
+                        scanLine: {
+                            '0%': { top: '-100%' },
+                            '100%': { top: '200%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0F0921;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(176, 38, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const tabButtons = document.querySelectorAll("[data-tab-btn]");
-      const tabPanels = document.querySelectorAll("[data-tab-panel]");
-      tabButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          tabButtons.forEach((b) => {
-            b.classList.remove("border-b-[#f20d0d]", "text-white");
-            b.classList.add("text-[#cb9090]");
-          });
-          btn.classList.remove("text-[#cb9090]");
-          btn.classList.add("border-b-[#f20d0d]", "text-white");
+        .glass {
+            background: rgba(27, 17, 57, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
 
-          tabPanels.forEach((p) => p.classList.add("hidden"));
-          const target = btn.getAttribute("data-tab-btn");
-          const panel = document.querySelector(`[data-tab-panel="${target}"]`);
-          if (panel) {
-            panel.classList.remove("hidden");
-          }
-        });
-      });
+        .glass-dark {
+            background: rgba(15, 9, 33, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
 
-      const accordions = document.querySelectorAll("[data-accordion]");
-      accordions.forEach((acc) => {
-        const header = acc.querySelector("[data-acc-header]");
-        const body = acc.querySelector("[data-acc-body]");
-        header.addEventListener("click", () => {
-          body.classList.toggle("hidden");
-        });
-      });
-    });
-  </script>
+        .neon-border {
+            position: relative;
+        }
+
+        .neon-border::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to right, #8A2BE2, #B026FF);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .radial-menu-container:hover .radial-menu-item {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .radial-menu-item {
+            transform: translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .radial-menu-item:nth-child(1) { transition-delay: 0.05s; }
+        .radial-menu-item:nth-child(2) { transition-delay: 0.1s; }
+        .radial-menu-item:nth-child(3) { transition-delay: 0.15s; }
+
+        .scan-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-effect::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to bottom, 
+                rgba(138, 43, 226, 0) 0%, 
+                rgba(138, 43, 226, 0.1) 50%, 
+                rgba(138, 43, 226, 0) 100%);
+            animation: scanLine 3s linear infinite;
+            z-index: 1;
+        }
+
+        .tab-btn {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #B026FF;
+            transition: width 0.3s ease;
+        }
+
+        .tab-btn.active::after {
+            width: 100%;
+        }
+
+        .hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .cyber-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(138, 43, 226, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(138, 43, 226, 0.05) 1px, transparent 1px);
+        }
+
+        .data-stream {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .data-stream::before {
+            content: "01101010010110101010101001010101010101000101010100101010101010101001010";
+            position: absolute;
+            font-family: monospace;
+            font-size: 10px;
+            color: rgba(138, 43, 226, 0.2);
+            white-space: nowrap;
+            animation: dataScroll 20s linear infinite;
+        }
+
+        @keyframes dataScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
 </head>
 
-<body class="m-0 p-0" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
-  <div class="relative flex min-h-screen flex-col bg-[#231010] overflow-x-hidden">
-    <header class="flex items-center justify-between border-b border-[#492222] px-10 py-3">
-      <div class="flex items-center gap-4 text-white">
-        <div class="size-4">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-              d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-              fill="currentColor"></path>
-          </svg>
-        </div>
-        <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
-          Sandbox
-        </h2>
-      </div>
-
-      <div class="flex flex-1 justify-end items-center gap-6">
-        <nav class="flex items-center gap-5">
-          <a href="dashboard.html"
-            class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Anasayfa</a>
-
-        </nav>
-        <div class="relative group">
-          <button class="text-white text-sm font-medium leading-normal px-2 py-1">
-            Kullanıcı Paneli
-          </button>
-          <div
-            class="absolute left-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-48 hidden group-hover:block z-50">
-            <a href="users.html"
-              class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Kullanıcılar</a>
-            <a href="supports.html"
-              class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Destek</a>
-            <a href="perms.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Yetkiler</a>
-          </div>
-        </div>
-
-
-        <a href="scanner.html"
-          class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
-          Analizi Başlat
-        </a>
-
-
-        <a href="scanner-details.html"
-          class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
-          Analiz Detayı
-        </a>
-        <div class="relative hidden md:flex items-center">
-          <div class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
-              <path
-                d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-              </path>
-            </svg>
-          </div>
-          <input type="text" placeholder="Genel Arama"
-            class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-[#492222] text-white border-[#492222] focus:outline-none" />
-        </div>
-
-        <button
-          class="relative flex items-center justify-center rounded-xl h-10 bg-[#492222] text-white gap-2 text-sm font-bold px-2.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
-            <path
-              d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z">
-            </path>
-          </svg>
-        </button>
-
-        <div class="relative group">
-          <div class="flex items-center gap-2 cursor-pointer">
-            <span class="text-sm font-medium">Ali Demir</span>
-            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-              style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'>
-            </div>
-          </div>
-          <div
-            class="absolute right-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-40 hidden group-hover:block z-50">
-            <a href="profile-detail.html"
-              class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Profil Detayı</a>
-            <a href="login.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Çıkış Yap</a>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <div class="px-10 py-5 flex-1 flex flex-col max-w-[1200px] mx-auto w-full">
-      <div class="flex justify-between items-center flex-wrap gap-3">
-        <div class="flex flex-col">
-          <p class="text-white text-2xl font-bold">Rapor #ANYRUN-20230101</p>
-          <p class="text-[#cb9090] text-sm">
-            (Örnek veri - Any.Run benzeri) - 2 saat önce gönderildi
-          </p>
-        </div>
-        <div class="flex gap-2 items-center">
-          <p class="text-white text-sm">
-            Makine:
-            <span class="text-[#cb9090]">Win10-64 (Threat.Zone Örnek)</span>
-          </p>
-          <p class="text-white text-sm">
-            Kategori:
-            <span class="text-[#cb9090]">Suspicious .exe</span>
-          </p>
-          <button
-            class="flex items-center justify-center h-8 px-4 rounded-xl bg-[#492222] text-white text-sm font-medium">
-            Tekrar Analiz
-          </button>
-        </div>
-      </div>
-
-      <div class="mt-4 border-b border-[#683131]">
-        <div class="flex gap-6 text-[#cb9090]">
-          <button class="pb-2 border-b-2 border-b-[#f20d0d] text-white" data-tab-btn="overview">
-            Genel Bakış
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="file">
-            Dosya
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="pe">
-            PE Bilgisi
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="yara">
-            Yara &amp; Cape
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="network">
-            Ağ
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="behavior">
-            Davranış
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="extra">
-            Ekstra
-          </button>
-          <button class="pb-2 border-b-2 border-b-transparent" data-tab-btn="screenshots">
-            Ekran Görüntüleri
-          </button>
-        </div>
-      </div>
-
-      <div class="mt-4 flex-1">
-        <div data-tab-panel="overview" class="block">
-          <h3 class="text-white text-lg font-bold mb-3">Risk ve Özeti</h3>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-[#341818] border border-[#683131] rounded-xl p-4 flex flex-col gap-2">
-              <p class="text-white text-base font-bold">malscore</p>
-              <p class="text-[#cb9090] text-sm">
-                9.2 (Threat.Zone - Tespit seviyesi)
-              </p>
-            </div>
-            <div class="bg-[#341818] border border-[#683131] rounded-xl p-4 flex flex-col gap-2">
-              <p class="text-white text-base font-bold">malstatus</p>
-              <p class="text-[#cb9090] text-sm">Malicious</p>
-            </div>
-            <div class="bg-[#341818] border border-[#683131] rounded-xl p-4 flex flex-col gap-2">
-              <p class="text-white text-base font-bold">Suricata (#59)</p>
-              <p class="text-[#cb9090] text-sm">
-                Any.Run - Kural eşleşmesi (Network Exploit)
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div data-tab-panel="file" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">Dosya Bilgisi</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-sm text-[#cb9090] font-medium">Name</p>
-              <p class="text-white text-base font-bold">
-                suspicious_setup.exe
-              </p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-sm text-[#cb9090] font-medium">Size</p>
-              <p class="text-white text-base font-bold">1.1 MB</p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-sm text-[#cb9090] font-medium">CRC32</p>
-              <p class="text-white text-base font-bold">0x8FAB1234</p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-sm text-[#cb9090] font-medium">MD5</p>
-              <p class="text-white text-base font-bold">abc1234def5678...</p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-sm text-[#cb9090] font-medium">SHA256</p>
-              <p class="text-white text-base font-bold">
-                0123abcd...ffedcba9898...
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div data-tab-panel="pe" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">
-            PE Bilgisi (Any.Run Örneği)
-          </h3>
-          <div class="flex flex-col gap-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="bg-[#341818] p-4 rounded-xl border border-[#683131]">
-                <p class="text-sm text-[#cb9090] font-medium">EntryPoint</p>
-                <p class="text-white text-base font-bold">0x401200</p>
-              </div>
-              <div class="bg-[#341818] p-4 rounded-xl border border-[#683131]">
-                <p class="text-sm text-[#cb9090] font-medium">ep_bytes</p>
-                <p class="text-white text-base font-bold">E9 4E 00 ...</p>
-              </div>
-              <div class="bg-[#341818] p-4 rounded-xl border border-[#683131]">
-                <p class="text-sm text-[#cb9090] font-medium">OS Version</p>
-                <p class="text-white text-base font-bold">6.3 (Win8.1+)</p>
-              </div>
-            </div>
-
-            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
-              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
-                <p class="text-white text-sm font-bold">Imports</p>
-                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
-              </div>
-              <div class="hidden px-4 pb-3" data-acc-body>
-                <ul class="list-disc list-inside text-white text-sm">
-                  <li>mscoree.dll</li>
-                  <li>advapi32.dll</li>
-                  <li>ws2_32.dll</li>
-                </ul>
-              </div>
-            </div>
-
-            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
-              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
-                <p class="text-white text-sm font-bold">Exports</p>
-                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
-              </div>
-              <div class="hidden px-4 pb-3" data-acc-body>
-                <ul class="list-decimal list-inside text-white text-sm">
-                  <li>DllEntryPoint</li>
-                  <li>PluginMain</li>
-                </ul>
-              </div>
-            </div>
-
-            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
-              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
-                <p class="text-white text-sm font-bold">Sections</p>
-                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
-              </div>
-              <div class="hidden px-4 pb-3 flex flex-col gap-2" data-acc-body>
-                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
-                  <p>Name: <span class="text-[#cb9090]">.text</span></p>
-                  <p>Entropy: <span class="text-[#cb9090]">6.32</span></p>
-                  <p>Characteristics: <span class="text-[#cb9090]">0x60000020</span></p>
+<body class="min-h-screen text-white">
+    <div class="relative flex flex-col min-h-screen overflow-x-hidden">
+        <!-- Header Section with Glowing Elements -->
+        <header class="glass border-b border-primary/30 px-6 py-3 sticky top-0 z-50">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo and Title -->
+                <div class="flex items-center gap-4">
+                    <div class="size-10 flex items-center justify-center bg-primary/10 rounded-lg p-2 neon-border animate-pulse-slow">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z" fill="url(#paint0_linear)" />
+                            <defs>
+                                <linearGradient id="paint0_linear" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#B026FF" />
+                                    <stop offset="1" stop-color="#8A2BE2" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h2 class="text-white text-2xl font-orbitron font-bold tracking-wider">
+                        <span class="text-primary-light">META</span>SANDBOX
+                    </h2>
                 </div>
-                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
-                  <p>Name: <span class="text-[#cb9090]">.data</span></p>
-                  <p>Entropy: <span class="text-[#cb9090]">5.12</span></p>
-                  <p>Characteristics: <span class="text-[#cb9090]">0xC0000040</span></p>
+
+                <!-- Navigation and User Interface -->
+                <div class="flex-1 flex justify-end items-center gap-4 sm:gap-6">
+                    <!-- Navigation Links -->
+                    <nav class="hidden md:flex items-center gap-5">
+                        <a href="#" class="px-4 py-2 text-sm hover:text-primary-light font-medium transition-colors duration-200 font-rajdhani border-b-2 border-primary-light">Anasayfa</a>
+                    </nav>
+
+                    <!-- User Panel Dropdown -->
+                    <div class="relative group radial-menu-container">
+                        <button class="text-white text-sm font-medium font-orbitron leading-normal px-3 py-2 bg-dark-light bg-opacity-50 rounded-lg hover:bg-primary/20 transition-all duration-300">
+                            Kullanıcı Paneli
+                        </button>
+                        <div class="absolute left-0 mt-2 rounded-xl shadow-lg w-48 hidden group-hover:block z-50 overflow-hidden">
+                            <div class="glass p-1 rounded-xl">
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Kullanıcılar</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Destek</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Yetkiler</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <a href="#" class="hidden md:flex items-center justify-center rounded-xl h-10 px-5 bg-gradient-to-r from-primary to-secondary text-white text-sm font-bold font-orbitron shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5">
+                        Analizi Başlat
+                    </a>
+
+                    <a href="#" class="hidden md:flex items-center justify-center rounded-xl h-10 px-5 bg-dark-light border border-primary/30 text-white text-sm font-bold font-orbitron transition-all duration-300 hover:bg-primary/20">
+                        Analiz Detayı
+                    </a>
+
+                    <!-- Search Box -->
+                    <div class="relative hidden md:flex items-center">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                                <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                            </svg>
+                        </div>
+                        <input type="text" placeholder="Genel Arama" class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-dark-light bg-opacity-50 text-white border border-primary/20 focus:border-primary/50 focus:outline-none transition-all duration-200" />
+                    </div>
+
+                    <!-- Notification Button -->
+                    <button class="relative flex items-center justify-center rounded-xl h-10 w-10 bg-dark-light border border-primary/30 text-white hover:bg-primary/20 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z"></path>
+                        </svg>
+                        <span class="absolute -top-1 -right-1 size-4 bg-secondary rounded-full text-xs flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- User Profile -->
+                    <div class="relative group radial-menu-container">
+                        <div class="flex items-center gap-2 cursor-pointer">
+                            <span class="text-sm font-medium hidden sm:block">Ali Demir</span>
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30 animate-glow" style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'></div>
+                        </div>
+                        <div class="absolute right-0 mt-2 rounded-xl shadow-lg w-40 hidden group-hover:block z-50 overflow-hidden">
+                            <div class="glass p-1 rounded-xl">
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Profil Detayı</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Çıkış Yap</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
+        </header>
 
-            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
-              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
-                <p class="text-white text-sm font-bold">Resources</p>
-                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
-              </div>
-              <div class="hidden px-4 pb-3" data-acc-body>
-                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
-                  <p>Name: <span class="text-[#cb9090]">ICON</span></p>
-                  <p>Language: <span class="text-[#cb9090]">1033</span></p>
-                  <p>Entropy: <span class="text-[#cb9090]">4.22</span></p>
+        <main class="container mx-auto px-4 py-8 flex-1">
+            <!-- Report Header with Machine Info -->
+            <div class="glass rounded-2xl p-6 mb-8 neon-border animate-float">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="flex flex-col">
+                        <h1 class="text-white text-2xl md:text-3xl font-orbitron font-bold bg-gradient-to-r from-primary-light to-secondary bg-clip-text text-transparent">
+                            Rapor #META-20250304
+                        </h1>
+                        <p class="text-gray-400 text-sm mt-1 font-rajdhani flex items-center">
+                            <span class="inline-block w-2 h-2 bg-primary-light rounded-full mr-2 animate-pulse"></span>
+                            2 saat önce gönderildi
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 md:gap-5">
+                        <div class="glass-dark rounded-lg px-3 py-2 flex items-center gap-2">
+                            <div class="size-6 hexagon bg-primary/30 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Makine</p>
+                                <p class="text-sm text-white font-medium">Win10-64 Sanal</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-dark rounded-lg px-3 py-2 flex items-center gap-2">
+                            <div class="size-6 hexagon bg-secondary/30 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Kategori</p>
+                                <p class="text-sm text-white font-medium">Suspicious .exe</p>
+                            </div>
+                        </div>
+
+                        <button class="glass-dark rounded-lg px-4 py-2 text-sm font-medium text-white flex items-center gap-2 hover:bg-primary/20 transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light">
+                                <polyline points="1 4 1 10 7 10"></polyline>
+                                <polyline points="23 20 23 14 17 14"></polyline>
+                                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                            </svg>
+                            Tekrar Analiz
+                        </button>
+                    </div>
                 </div>
-              </div>
             </div>
 
-            <div data-accordion class="bg-[#341818] border border-[#683131] rounded-xl">
-              <div class="p-3 flex items-center justify-between cursor-pointer" data-acc-header>
-                <p class="text-white text-sm font-bold">VersionInfo</p>
-                <span class="text-[#cb9090] text-xs">Göster/Gizle</span>
-              </div>
-              <div class="hidden px-4 pb-3" data-acc-body>
-                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
-                  <p>Name: <span class="text-[#cb9090]">FileVersion</span></p>
-                  <p>Value: <span class="text-[#cb9090]">2.0.0.1</span></p>
+            <!-- Tab Navigation -->
+            <div class="mb-6">
+                <div class="glass rounded-xl p-1 flex flex-wrap">
+                    <button class="tab-btn active flex-grow py-3 px-4 rounded-lg text-white hover:bg-primary/10 transition-all duration-300" data-tab="overview">
+                        Genel Bakış
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="file">
+                        Dosya
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="pe">
+                        PE Bilgisi
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="yara">
+                        Yara &amp; Cape
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="network">
+                        Ağ
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="behavior">
+                        Davranış
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="extra">
+                        Ekstra
+                    </button>
+                    <button class="tab-btn flex-grow py-3 px-4 rounded-lg text-gray-400 hover:bg-primary/10 transition-all duration-300" data-tab="screenshots">
+                        Ekran Görüntüleri
+                    </button>
                 </div>
-                <div class="bg-[#492222] p-2 rounded-md text-white text-sm">
-                  <p>Name: <span class="text-[#cb9090]">CompanyName</span></p>
-                  <p>Value: <span class="text-[#cb9090]">Malicious Inc.</span></p>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="cyber-grid">
+                <!-- Overview Tab -->
+                <div class="tab-content" id="overview-tab">
+                    <h3 class="text-white text-xl font-orbitron font-bold mb-6 flex items-center">
+                        <span class="inline-block mr-2 size-5 bg-primary rounded-md"></span>
+                        Risk ve Özeti
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass rounded-2xl p-6 neon-border scan-effect">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-white text-lg font-orbitron font-medium">Tehdit Skoru</h4>
+                                <div class="size-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold font-orbitron">9.2</div>
+                            </div>
+                            <div class="h-3 bg-dark-medium rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary to-secondary w-[92%]"></div>
+                            </div>
+                            <p class="text-gray-400 text-sm mt-3">Tehlikeli seviyede yüksek tehdit skoru</p>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 neon-border scan-effect">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-white text-lg font-orbitron font-medium">Durum</h4>
+                                <div class="py-1 px-3 rounded-full bg-red-900/30 text-red-400 text-sm font-medium">Zararlı</div>
+                            </div>
+                            <div class="flex items-center gap-2 mt-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                                <span class="text-white">Malicious Classification</span>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 neon-border scan-effect">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-white text-lg font-orbitron font-medium">Suricata</h4>
+                                <div class="py-1 px-3 rounded-full bg-secondary/30 text-secondary-light text-sm font-medium">#59 Eşleşme</div>
+                            </div>
+                            <p class="text-gray-400 text-sm">Network Exploit tespit edildi</p>
+                            <div class="mt-3 data-stream h-6 bg-dark-medium rounded-lg"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 mt-6 neon-border">
+                        <h4 class="text-white text-lg font-orbitron font-medium mb-4">Tehdit Grafiği</h4>
+                        <div class="aspect-video bg-dark-medium rounded-xl overflow-hidden p-4 relative">
+                            <!-- Simulated Graph -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light mx-auto mb-4 opacity-30">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                    <p class="text-primary-light text-sm">Tehdit Aktivite Grafiği</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div data-tab-panel="yara" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">
-            Yara / Cape Yara Örnekleri
-          </h3>
-          <div class="flex flex-col gap-4">
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">
-                Yara Kural: <span class="text-[#cb9090]">TrojanDownloader</span>
-              </p>
-              <p class="text-white text-sm">
-                Strings:
-                <span class="text-[#cb9090]">["$a = 'http://malicious.com/dl'", "$b = 'PE'"]</span>
-              </p>
-              <p class="text-white text-sm">
-                Adresler:
-                <span class="text-[#cb9090]">["0x405000", "0x405050"]</span>
-              </p>
-              <p class="text-white text-sm">
-                Meta.desc:
-                <span class="text-[#cb9090]">İçerik indirerek sistemde çalıştıran trojan.</span>
-              </p>
-            </div>
+                <!-- File Tab -->
+                <div class="tab-content hidden" id="file-tab">
+                    <h3 class="text-white text-xl font-orbitron font-bold mb-6 flex items-center">
+                        <span class="inline-block mr-2 size-5 bg-primary rounded-md"></span>
+                        Dosya Bilgisi
+                    </h3>
 
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">
-                Cape Yara: <span class="text-[#cb9090]">RansomCape</span>
-              </p>
-              <p class="text-white text-sm">
-                Cape Type:
-                <span class="text-[#cb9090]">Ransom/AnyRun-Check</span>
-              </p>
-              <p class="text-white text-sm">
-                Strings:
-                <span class="text-[#cb9090]">["cape_str_rand", "enc_key= 'AES256'"]</span>
-              </p>
-              <p class="text-white text-sm">
-                Addresses:
-                <span class="text-[#cb9090]">["0x501000"]</span>
-              </p>
-            </div>
-          </div>
-        </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">Dosya Adı</span>
+                                <span class="text-white text-lg font-medium">suspicious_setup.exe</span>
+                            </div>
+                        </div>
 
-        <div data-tab-panel="network" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">Ağ Aktiviteleri</h3>
-          <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-            <p class="text-white text-sm font-bold mb-2">
-              (Threat.Zone Örneği)
-            </p>
-            <p class="text-white text-sm">
-              Hosts IP:
-              <span class="text-[#cb9090]">8.8.8.8, 34.34.34.10 (ülke: US, tahmini)</span>
-            </p>
-            <p class="text-white text-sm">
-              Dead Hosts:
-              <span class="text-[#cb9090]">192.168.56.101 (LAN tarama başarısız)</span>
-            </p>
-            <p class="text-white text-sm">
-              Domains:
-              <span class="text-[#cb9090]">["malicious.com","example.org"]</span>
-            </p>
-          </div>
-        </div>
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">Boyut</span>
+                                <span class="text-white text-lg font-medium">1.1 MB</span>
+                            </div>
+                        </div>
 
-        <div data-tab-panel="behavior" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">
-            Davranış Kayıtları (Any.Run Örneği)
-          </h3>
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-4 bg-[#231010] px-4 py-2 justify-between">
-              <div class="flex flex-col">
-                <p class="text-white text-sm font-medium">
-                  CreateProcess -> powershell.exe
-                </p>
-                <p class="text-[#cb9090] text-xs">~1 saat önce</p>
-              </div>
-            </div>
-            <div class="flex items-center gap-4 bg-[#231010] px-4 py-2 justify-between">
-              <div class="flex flex-col">
-                <p class="text-white text-sm font-medium">
-                  CopyFile -> C:\Users\Public\mal.dll
-                </p>
-                <p class="text-[#cb9090] text-xs">~45 dk önce</p>
-              </div>
-            </div>
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">CRC32</span>
+                                <span class="text-white text-lg font-medium">0x8FAB1234</span>
+                            </div>
+                        </div>
 
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl mt-4">
-              <p class="text-white text-sm font-bold">debug.log</p>
-              <p class="text-[#cb9090] text-sm">
-                “RDP oturumu kapatıldı - normal sonlanma. 0x00.” (Threat.Zone
-                raporu)
-              </p>
-            </div>
-          </div>
-        </div>
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">MD5</span>
+                                <span class="text-white text-lg font-medium font-mono">abc1234def5678...</span>
+                            </div>
+                        </div>
 
-        <div data-tab-panel="extra" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">
-            Ekstra Bilgiler (Any.Run &amp; Threat.Zone Örnek)
-          </h3>
-          <div class="flex flex-col gap-4">
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">Detection Family</p>
-              <p class="text-[#cb9090] text-sm">
-                Trojan.Win32.CryptoRansom
-              </p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">.dotnet</p>
-              <p class="text-[#cb9090] text-sm">No .NET metadata found</p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">die</p>
-              <p class="text-[#cb9090] text-sm">
-                PE32+ console - MS Visual C++ 2015
-              </p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">
-                selfextract.de4dot.extracted_files
-              </p>
-              <ul class="list-disc list-inside text-white text-sm">
-                <li>payload.dll</li>
-                <li>key.dat</li>
-              </ul>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">procdump</p>
-              <p class="text-[#cb9090] text-sm">
-                “2 adet dump oluşturuldu.” (Threat.Zone)
-              </p>
-            </div>
-            <div class="bg-[#341818] p-4 border border-[#683131] rounded-xl">
-              <p class="text-white text-base font-bold">CAPE[*].? ek verisi</p>
-              <p class="text-[#cb9090] text-sm">
-                Suspicious injection algılaması (CAPE - Example)
-              </p>
-            </div>
-          </div>
-        </div>
-        <div data-tab-panel="screenshots" class="hidden">
-          <h3 class="text-white text-lg font-bold mb-3">Tarama Ekran Görüntüleri</h3>
-          <p class="text-[#cb9090] text-sm mb-3">
-            Burada tarama sırasında alınan ekran görüntüleri görüntülenecektir.
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="bg-[#341818] border border-[#683131] rounded-xl p-2">
-              <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 1"
-                class="w-full h-auto rounded-md" />
-              <p class="text-sm text-white mt-2">
-                Ekran görüntüsü #1 açıklaması
-              </p>
-            </div>
+                        <div class="glass rounded-2xl p-6 neon-border col-span-1 md:col-span-2">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">SHA256</span>
+                                <span class="text-white text-lg font-medium font-mono overflow-x-auto">0123abcd...ffedcba9898...</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="bg-[#341818] border border-[#683131] rounded-xl p-2">
-              <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 2"
-                class="w-full h-auto rounded-md" />
-              <p class="text-sm text-white mt-2">
-                Ekran görüntüsü #2 açıklaması
-              </p>
-            </div>
+                    <div class="glass rounded-2xl p-6 mt-6 neon-border">
+                        <h4 class="text-white text-lg font-orbitron font-medium mb-4">Dosya Analiz Özeti</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="glass-dark rounded-xl p-4 flex flex-col items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light mb-2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                </svg>
+                                <span class="text-gray-400 text-xs">Tespit Oranı</span>
+                                <span class="text-white text-lg font-medium">35/64</span>
+                            </div>
+                            <div class="glass-dark rounded-xl p-4 flex flex-col items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light mb-2">
+                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                                </svg>
+                                <span class="text-gray-400 text-xs">Dosya Türü</span>
+                                <span class="text-white text-lg font-medium">PE32 Executable</span>
+                            </div>
+                            <div class="glass-dark rounded-xl p-4 flex flex-col items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light mb-2">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
+                                <span class="text-gray-400 text-xs">İlk Görülme</span>
+                                <span class="text-white text-lg font-medium">2 Mart 2025</span>
+                            </div>
+                            <div class="glass-dark rounded-xl p-4 flex flex-col items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light mb-2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span class="text-gray-400 text-xs">Paketlenmiş</span>
+                                <span class="text-white text-lg font-medium">UPX 3.96</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="bg-[#341818] border border-[#683131] rounded-xl p-2">
-              <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 3"
-                class="w-full h-auto rounded-md" />
-              <p class="text-sm text-white mt-2">
-                Ekran görüntüsü #3 açıklaması
-              </p>
-            </div>
-          </div>
-        </div>
+                <!-- PE Info Tab -->
+                <div class="tab-content hidden" id="pe-tab">
+                    <h3 class="text-white text-xl font-orbitron font-bold mb-6 flex items-center">
+                        <span class="inline-block mr-2 size-5 bg-primary rounded-md"></span>
+                        PE Bilgisi
+                    </h3>
 
-      </div>
-      <footer class="px-10 py-4 border-t border-[#492222] text-center text-sm text-[#cb9090]">
-        <p>
-          © 2025 Sandbox Projesi - Tüm Hakları Saklıdır.
-        </p>
-      </footer>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">EntryPoint</span>
+                                <span class="text-white text-lg font-medium font-mono">0x401200</span>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">ep_bytes</span>
+                                <span class="text-white text-lg font-medium font-mono">E9 4E 00 ...</span>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 neon-border">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 text-sm mb-1">OS Version</span>
+                                <span class="text-white text-lg font-medium">6.3 (Win8.1+)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion for PE details -->
+                    <div class="flex flex-col gap-4">
+                        <!-- Imports Accordion -->
+                        <div class="glass rounded-2xl overflow-hidden pe-accordion" data-accordion>
+                            <div class="flex items-center justify-between p-6 cursor-pointer" data-accordion-header>
+                                <div class="flex items-center gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                    <h4 class="text-white text-lg font-orbitron font-medium">Imports</h4>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 transform transition-transform accordion-arrow">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="accordion-content px-6 pb-6 hidden">
+                                <div class="glass-dark rounded-xl p-4">
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-primary-light">•</span>
+                                            <span class="text-white font-mono">mscoree.dll</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-primary-light">•</span>
+                                            <span class="text-white font-mono">advapi32.dll</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-primary-light">•</span>
+                                            <span class="text-white font-mono">ws2_32.dll</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exports Accordion -->
+                        <div class="glass rounded-2xl overflow-hidden pe-accordion" data-accordion>
+                            <div class="flex items-center justify-between p-6 cursor-pointer" data-accordion-header>
+                                <div class="flex items-center gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <polyline points="19 12 12 19 5 12"></polyline>
+                                    </svg>
+                                    <h4 class="text-white text-lg font-orbitron font-medium">Exports</h4>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 transform transition-transform accordion-arrow">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="accordion-content px-6 pb-6 hidden">
+                                <div class="glass-dark rounded-xl p-4">
+                                    <ul class="space-y-2">
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-secondary">1.</span>
+                                            <span class="text-white font-mono">DllEntryPoint</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-secondary">2.</span>
+                                            <span class="text-white font-mono">PluginMain</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sections Accordion -->
+                        <div class="glass rounded-2xl overflow-hidden pe-accordion" data-accordion>
+                            <div class="flex items-center justify-between p-6 cursor-pointer" data-accordion-header>
+                                <div class="flex items-center gap-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-light">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="3" y1="15" x2="21" y2="15"></line>
+                                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                                        <line x1="15" y1="3" x2="15" y2="21"></line>
+                                    </svg>
+                                    <h4 class="text-white text-lg font-orbitron font-medium">Sections</h4>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 transform transition-transform accordion-arrow">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="accordion-content px-6 pb-6 hidden">
+                                <div class="glass-dark rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-white font-mono">.text</span>
+                                        <span class="py-1 px-2 rounded-md bg-primary/20 text-primary-light text-xs">CODE</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <span class="text-gray-400 text-xs">Entropy:</span>
+                                            <span class="text-white ml-1">6.32</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-400 text-xs">Size:</span>
+                                            <span class="text-white ml-1">0x1000</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-400 text-xs">Characteristics:</span>
+                                            <span class="text-white ml-1">0x60000020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="glass-dark rounded-xl p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-white font-mono">.data</span>
+                                        <span class="py-1 px-2 rounded-md bg-secondary/20 text-secondary text-xs">DATA</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <span class="text-gray-400 text-xs">Entropy:</span>
+                                            <span class="text-white ml-1">5.12</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-400 text-xs">Size:</span>
+                                            <span class="text-white ml-1">0x2000</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-gray-400 text-xs">Characteristics:</span>
+                                            <span class="text-white ml-1">0xC0000040</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Only showing first few tabs for brevity, other tabs would follow similar pattern -->
+                <div class="tab-content hidden" id="yara-tab">
+                    <h3 class="text-white text-xl font-orbitron font-bold mb-6 flex items-center">
+                        <span class="inline-block mr-2 size-5 bg-primary rounded-md"></span>
+                        Yara &amp; Cape Kuralları
+                    </h3>
+                    
+                    <div class="glass rounded-2xl p-6 neon-border mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-white text-lg font-orbitron font-medium">TrojanDownloader</h4>
+                            <span class="py-1 px-3 bg-red-900/20 text-red-400 rounded-full text-xs">Zararlı</span>
+                        </div>
+                        <div class="glass-dark p-4 rounded-xl space-y-3">
+                            <div>
+                                <span class="text-gray-400 text-sm">Strings:</span>
+                                <div class="mt-1 p-2 bg-dark-medium rounded-lg">
+                                    <code class="text-primary-light text-sm font-mono">["$a = 'http://malicious.com/dl'", "$b = 'PE'"]</code>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-sm">Adresler:</span>
+                                <div class="mt-1 p-2 bg-dark-medium rounded-lg">
+                                    <code class="text-primary-light text-sm font-mono">["0x405000", "0x405050"]</code>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-sm">Meta.desc:</span>
+                                <p class="mt-1 text-white text-sm">İçerik indirerek sistemde çalıştıran trojan.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-6 neon-border">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-white text-lg font-orbitron font-medium">RansomCape</h4>
+                            <span class="py-1 px-3 bg-red-900/20 text-red-400 rounded-full text-xs">CAPE Algılama</span>
+                        </div>
+                        <div class="glass-dark p-4 rounded-xl space-y-3">
+                            <div>
+                                <span class="text-gray-400 text-sm">Cape Type:</span>
+                                <p class="mt-1 text-white text-sm">Ransom/AnyRun-Check</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-sm">Strings:</span>
+                                <div class="mt-1 p-2 bg-dark-medium rounded-lg">
+                                    <code class="text-primary-light text-sm font-mono">["cape_str_rand", "enc_key= 'AES256'"]</code>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 text-sm">Addresses:</span>
+                                <div class="mt-1 p-2 bg-dark-medium rounded-lg">
+                                    <code class="text-primary-light text-sm font-mono">["0x501000"]</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content hidden" id="network-tab">
+                    <!-- Network Tab Content -->
+                </div>
+
+                <div class="tab-content hidden" id="behavior-tab">
+                    <!-- Behavior Tab Content -->
+                </div>
+
+                <div class="tab-content hidden" id="extra-tab">
+                    <!-- Extra Tab Content -->
+                </div>
+
+                <div class="tab-content hidden" id="screenshots-tab">
+                    <h3 class="text-white text-xl font-orbitron font-bold mb-6 flex items-center">
+                        <span class="inline-block mr-2 size-5 bg-primary rounded-md"></span>
+                        Ekran Görüntüleri
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        <div class="glass rounded-2xl p-4 neon-border">
+                            <div class="aspect-video bg-dark-medium rounded-xl overflow-hidden mb-3">
+                                <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 1" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="size-4 bg-primary-light rounded-full animate-pulse"></div>
+                                <p class="text-white text-sm">Başlatma aşaması</p>
+                            </div>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-4 neon-border">
+                            <div class="aspect-video bg-dark-medium rounded-xl overflow-hidden mb-3">
+                                <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 2" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="size-4 bg-secondary rounded-full animate-pulse"></div>
+                                <p class="text-white text-sm">Dosya şifreleme girişimi</p>
+                            </div>
+                        </div>
+                        
+                        <div class="glass rounded-2xl p-4 neon-border">
+                            <div class="aspect-video bg-dark-medium rounded-xl overflow-hidden mb-3">
+                                <img src="https://media.istockphoto.com/id/977855512/tr/video/vir%C3%BCs-tarama-ilerleme-uyar%C4%B1-iletisi-tehdit-tespit-uyar%C4%B1-ekran%C4%B1nda-bilgisayar-ekran-girerek.jpg?s=640x640&k=20&c=jwhm2WQeYK8yewVFF_JxUpDVfHHYWRRfgTfTzsscaAw=" alt="Screenshot 3" class="w-full h-full object-cover" />
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="size-4 bg-red-500 rounded-full animate-pulse"></div>
+                                <p class="text-white text-sm">Fidye notu gösterimi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="glass mt-8 py-4 px-6 text-center text-sm text-gray-400 border-t border-primary/20">
+            <div class="container mx-auto">
+                <p>© 2025 Metaverse Sandbox Projesi - Tüm Hakları Saklıdır.</p>
+            </div>
+        </footer>
     </div>
-  </div>
-</body>
 
+    <!-- Floating Particles -->
+    <div class="particles"></div>
+
+    <script>
+        // Create floating particles
+        document.addEventListener("DOMContentLoaded", function() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 30; i++) {
+                createParticle(particlesContainer);
+            }
+
+            // Tab switching functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Hide all tabs and remove active class
+                    tabContents.forEach(tab => tab.classList.add('hidden'));
+                    tabBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.classList.add('text-gray-400');
+                        b.classList.remove('text-white');
+                    });
+                    
+                    // Show selected tab and add active class
+                    document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+                    btn.classList.add('active');
+                    btn.classList.add('text-white');
+                    btn.classList.remove('text-gray-400');
+                });
+            });
+
+            // Initialize accordions
+            const accordions = document.querySelectorAll('[data-accordion]');
+            accordions.forEach(accordion => {
+                const header = accordion.querySelector('[data-accordion-header]');
+                const content = accordion.querySelector('.accordion-content');
+                const arrow = header.querySelector('.accordion-arrow');
+                
+                header.addEventListener('click', () => {
+                    content.classList.toggle('hidden');
+                    arrow.classList.toggle('rotate-180');
+                });
+            });
+        });
+
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            
+            // Random size between 2px and 6px
+            const size = Math.random() * 4 + 2;
+            
+            // Random position
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            
+            // Random opacity
+            const opacity = Math.random() * 0.3 + 0.1;
+            
+            // Random animation duration between 15s and 30s
+            const duration = Math.random() * 15 + 15;
+            
+            // Set styles
+            particle.style.cssText = `
+                position: fixed;
+                width: ${size}px;
+                height: ${size}px;
+                background: linear-gradient(to right, rgba(138, 43, 226, ${opacity}), rgba(176, 38, 255, ${opacity}));
+                border-radius: 50%;
+                top: ${posY}%;
+                left: ${posX}%;
+                pointer-events: none;
+                z-index: -1;
+                animation: float ${duration}s ease-in-out infinite;
+                filter: blur(1px);
+            `;
+            
+            container.appendChild(particle);
+        }
+    </script>
+</body>
 </html>

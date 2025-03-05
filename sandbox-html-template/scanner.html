@@ -1,385 +1,520 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-    <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700" />
-    <title>Galileo Tasarım</title>
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metaverse Sandbox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0F0921;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(176, 38, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .glass {
+            background: rgba(27, 17, 57, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-dark {
+            background: rgba(15, 9, 33, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .neon-border {
+            position: relative;
+        }
+
+        .neon-border::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to right, #8A2BE2, #B026FF);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .grid-pattern {
+            background-size: 30px 30px;
+            background-image: 
+                linear-gradient(to right, rgba(138, 43, 226, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(138, 43, 226, 0.1) 1px, transparent 1px);
+        }
+
+        /* Custom radio button styling */
+        .custom-radio-container input[type="radio"] {
+            display: none;
+        }
+
+        .custom-radio-container .radio-label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .custom-radio-container .radio-label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #8A2BE2;
+            border-radius: 50%;
+            background-color: transparent;
+        }
+
+        .custom-radio-container input[type="radio"]:checked + .radio-label:after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #8A2BE2;
+            box-shadow: 0 0 5px #8A2BE2, 0 0 10px #8A2BE2;
+        }
+
+        /* Animation for cyber elements */
+        .cyber-scan {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-scan::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, 
+                rgba(138, 43, 226, 0) 0%, 
+                rgba(138, 43, 226, 0.1) 50%, 
+                rgba(138, 43, 226, 0) 100%);
+            animation: scan 3s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0% { top: -100%; }
+            100% { top: 200%; }
+        }
+
+        /* Radial dropdown menu */
+        .radial-menu-container:hover .radial-menu-item {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .radial-menu-item {
+            transform: translateY(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .radial-menu-item:nth-child(1) { transition-delay: 0.05s; }
+        .radial-menu-item:nth-child(2) { transition-delay: 0.1s; }
+        .radial-menu-item:nth-child(3) { transition-delay: 0.15s; }
+    </style>
 </head>
 
-<body class="m-0 p-0">
-    <div class="relative flex size-full min-h-screen flex-col bg-[#231010] dark group/design-root overflow-x-hidden"
-        style='
-        --radio-dot-svg: url("data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(242,13,13)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e");
-        font-family: "Space Grotesk", "Noto Sans", sans-serif;
-      '>
-    <header class="flex items-center justify-between border-b border-[#492222] px-10 py-3">
-        <div class="flex items-center gap-4 text-white">
-            <div class="size-4">
-                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
-                        fill="currentColor"></path>
-                </svg>
-            </div>
-            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">
-                Sandbox
-            </h2>
-        </div>
-
-        <div class="flex flex-1 justify-end items-center gap-6">
-            <nav class="flex items-center gap-5">
-                <a href="dashboard.html"
-                    class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Anasayfa</a>
-
-            </nav>
-            <div class="relative group">
-                <button class="text-white text-sm font-medium leading-normal px-2 py-1">
-                    Kullanıcı Paneli
-                </button>
-                <div
-                    class="absolute left-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-48 hidden group-hover:block z-50">
-                    <a href="users.html"
-                        class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Kullanıcılar</a>
-                    <a href="supports.html"
-                        class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Destek</a>
-                    <a href="perms.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Yetkiler</a>
+<body class="min-h-screen text-white">
+    <div class="relative flex flex-col min-h-screen overflow-x-hidden">
+        <!-- Header Section with Glowing Elements -->
+        <header class="glass border-b border-primary/30 px-6 py-3 sticky top-0 z-50">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo and Title -->
+                <div class="flex items-center gap-4">
+                    <div class="size-10 flex items-center justify-center bg-primary/10 rounded-lg p-2 neon-border animate-pulse-slow">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z" fill="url(#paint0_linear)" />
+                            <defs>
+                                <linearGradient id="paint0_linear" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#B026FF" />
+                                    <stop offset="1" stop-color="#8A2BE2" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h2 class="text-white text-2xl font-orbitron font-bold tracking-wider">
+                        <span class="text-primary-light">META</span>SANDBOX
+                    </h2>
                 </div>
-            </div>
 
+                <!-- Navigation and User Interface -->
+                <div class="flex-1 flex justify-end items-center gap-4 sm:gap-6">
+                    <!-- Navigation Links -->
+                    <nav class="hidden md:flex items-center gap-5">
+                        <a href="#" class="px-4 py-2 text-sm hover:text-primary-light font-medium transition-colors duration-200 font-rajdhani border-b-2 border-primary-light">Anasayfa</a>
+                    </nav>
 
-            <a href="scanner.html"
-                class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
-                Analizi Başlat
-            </a>
+                    <!-- User Panel Dropdown -->
+                    <div class="relative group radial-menu-container">
+                        <button class="text-white text-sm font-medium font-orbitron leading-normal px-3 py-2 bg-dark-light bg-opacity-50 rounded-lg hover:bg-primary/20 transition-all duration-300">
+                            Kullanıcı Paneli
+                        </button>
+                        <div class="absolute left-0 mt-2 rounded-xl shadow-lg w-48 hidden group-hover:block z-50 overflow-hidden">
+                            <div class="glass p-1 rounded-xl">
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Kullanıcılar</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Destek</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Yetkiler</a>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Action Buttons -->
+                    <a href="#" class="hidden md:flex items-center justify-center rounded-xl h-10 px-5 bg-gradient-to-r from-primary to-secondary text-white text-sm font-bold font-orbitron shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5">
+                        Analizi Başlat
+                    </a>
 
-            <a href="scanner-details.html"
-                class="hidden md:flex items-center justify-center rounded-xl h-10 px-4 bg-[#f20d0d] text-white text-sm font-bold">
-                Analiz Detayı
-            </a>
-            <div class="relative hidden md:flex items-center">
-                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                        viewBox="0 0 256 256">
-                        <path
-                            d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-                        </path>
-                    </svg>
-                </div>
-                <input type="text" placeholder="Genel Arama"
-                    class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-[#492222] text-white border-[#492222] focus:outline-none" />
-            </div>
+                    <a href="#" class="hidden md:flex items-center justify-center rounded-xl h-10 px-5 bg-dark-light border border-primary/30 text-white text-sm font-bold font-orbitron transition-all duration-300 hover:bg-primary/20">
+                        Analiz Detayı
+                    </a>
 
-            <button
-                class="relative flex items-center justify-center rounded-xl h-10 bg-[#492222] text-white gap-2 text-sm font-bold px-2.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                    viewBox="0 0 256 256">
-                    <path
-                        d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z">
-                    </path>
-                </svg>
-            </button>
+                    <!-- Search Box -->
+                    <div class="relative hidden md:flex items-center">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                                <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                            </svg>
+                        </div>
+                        <input type="text" placeholder="Genel Arama" class="w-48 md:w-60 h-10 pl-10 pr-3 rounded-xl text-sm bg-dark-light bg-opacity-50 text-white border border-primary/20 focus:border-primary/50 focus:outline-none transition-all duration-200" />
+                    </div>
 
-            <div class="relative group">
-                <div class="flex items-center gap-2 cursor-pointer">
-                    <span class="text-sm font-medium">Ali Demir</span>
-                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                        style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'>
+                    <!-- Notification Button -->
+                    <button class="relative flex items-center justify-center rounded-xl h-10 w-10 bg-dark-light border border-primary/30 text-white hover:bg-primary/20 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                            <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z"></path>
+                        </svg>
+                        <span class="absolute -top-1 -right-1 size-4 bg-secondary rounded-full text-xs flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- User Profile -->
+                    <div class="relative group radial-menu-container">
+                        <div class="flex items-center gap-2 cursor-pointer">
+                            <span class="text-sm font-medium hidden sm:block">Ali Demir</span>
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30 animate-glow" style='background-image: url("https://cdn.usegalileo.ai/replicate/44054395-3f26-4fc6-b930-e2ca89e11e0c.png");'></div>
+                        </div>
+                        <div class="absolute right-0 mt-2 rounded-xl shadow-lg w-40 hidden group-hover:block z-50 overflow-hidden">
+                            <div class="glass p-1 rounded-xl">
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Profil Detayı</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-primary/20 rounded-lg transition-colors duration-200 my-1 radial-menu-item">Çıkış Yap</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div
-                    class="absolute right-0 mt-2 bg-[#492222] border border-[#683131] rounded-xl shadow-lg w-40 hidden group-hover:block z-50">
-                    <a href="profile-detail.html"
-                        class="block px-4 py-2 text-sm hover:bg-[#683131] border-b border-[#683131]">Profil Detayı</a>
-                    <a href="login.html" class="block px-4 py-2 text-sm hover:bg-[#683131]">Çıkış Yap</a>
-                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-            <div class="px-40 flex flex-1 justify-center py-5">
-                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-
-                    <div class="flex flex-col gap-6 md:flex-row">
+        <!-- Main Content -->
+        <div class="flex-1 container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Main Content Area -->
+            <div class="lg:col-span-9 grid-pattern">
+                <div class="glass rounded-2xl p-6 shadow-xl animate-float neon-border">
+                    <div class="flex flex-col gap-6 md:flex-row mb-6">
+                        <!-- File Upload Section -->
                         <div class="md:w-1/2 p-4">
-                            <h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-2">Dosya Yükle
+                            <h3 class="text-white text-xl font-orbitron font-bold leading-tight tracking-wider pb-2 flex items-center">
+                                <span class="inline-block mr-2 size-5 bg-primary rounded-md"></span>
+                                Dosya Yükle
                             </h3>
-                            <p class="text-white text-base font-normal leading-normal pb-3">Bir dosyayı sürükleyip
-                                bırakın veya yüklemek için tıklayın.</p>
+                            <p class="text-light-purple text-base font-normal leading-normal pb-3">
+                                Bir dosyayı sürükleyip bırakın veya yüklemek için tıklayın.
+                            </p>
 
-                            <div
-                                class="relative flex items-center justify-center w-full h-40 rounded-xl border-2 border-dashed border-[#683131] bg-[#492222] text-white">
-                                <p class="pointer-events-none text-sm font-medium">Dosyalarınızı buraya bırakın</p>
-                                <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" multiple
-                                    accept="*/*" />
+                            <div class="cyber-scan relative flex items-center justify-center w-full h-40 rounded-xl border-2 border-dashed border-primary/30 bg-dark-light bg-opacity-30 text-white group transition-all duration-300 hover:border-primary/60">
+                                <div class="flex flex-col items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-primary-light mb-2 group-hover:scale-110 transition-transform duration-300">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    <p class="pointer-events-none text-sm font-medium">Dosyalarınızı buraya bırakın</p>
+                                </div>
+                                <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" multiple accept="*/*" />
                             </div>
                         </div>
 
+                        <!-- Scan Options Section -->
                         <div class="md:w-1/2 p-4">
-                            <h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] pb-2">Tarama
-                                Seçenekleri</h3>
-                            <div class="flex flex-col gap-3">
-                                <label
-                                    class="flex items-center gap-4 rounded-xl border border-solid border-[#683131] p-[15px]">
-                                    <input type="radio"
-                                        class="h-5 w-5 border-2 border-[#683131] bg-transparent text-transparent checked:border-[#f20d0d] checked:bg-[image:var(--radio-dot-svg)] focus:outline-none focus:ring-0 focus:ring-offset-0"
-                                        name="taramaSecenekleri" checked />
-                                    <div class="flex grow flex-col">
-                                        <p class="text-white text-sm font-medium leading-normal">Zorunlu Tarama</p>
-                                    </div>
-                                </label>
-                                <label
-                                    class="flex items-center gap-4 rounded-xl border border-solid border-[#683131] p-[15px]">
-                                    <input type="radio"
-                                        class="h-5 w-5 border-2 border-[#683131] bg-transparent text-transparent checked:border-[#f20d0d] checked:bg-[image:var(--radio-dot-svg)] focus:outline-none focus:ring-0 focus:ring-offset-0"
-                                        name="taramaSecenekleri" />
-                                    <div class="flex grow flex-col">
-                                        <p class="text-white text-sm font-medium leading-normal">Öncelikli Tarama</p>
-                                    </div>
-                                </label>
-                                <label
-                                    class="flex items-center gap-4 rounded-xl border border-solid border-[#683131] p-[15px]">
-                                    <input type="radio"
-                                        class="h-5 w-5 border-2 border-[#683131] bg-transparent text-transparent checked:border-[#f20d0d] checked:bg-[image:var(--radio-dot-svg)] focus:outline-none focus:ring-0 focus:ring-offset-0"
-                                        name="taramaSecenekleri" />
-                                    <div class="flex grow flex-col">
-                                        <p class="text-white text-sm font-medium leading-normal">Derinlemesine Tarama
-                                        </p>
-                                    </div>
-                                </label>
-                                <label
-                                    class="flex items-center gap-4 rounded-xl border border-solid border-[#683131] p-[15px]">
-                                    <input type="radio"
-                                        class="h-5 w-5 border-2 border-[#683131] bg-transparent text-transparent checked:border-[#f20d0d] checked:bg-[image:var(--radio-dot-svg)] focus:outline-none focus:ring-0 focus:ring-offset-0"
-                                        name="taramaSecenekleri" />
-                                    <div class="flex grow flex-col">
-                                        <p class="text-white text-sm font-medium leading-normal">Hızlı Tarama</p>
-                                    </div>
-                                </label>
+                            <h3 class="text-white text-xl font-orbitron font-bold leading-tight tracking-wider pb-2 flex items-center">
+                                <span class="inline-block mr-2 size-5 bg-secondary rounded-md"></span>
+                                Tarama Seçenekleri
+                            </h3>
+                            <div class="flex flex-col gap-3 custom-radio-container">
+                                <div class="glass-dark rounded-xl p-4 transition-all duration-300 hover:bg-dark-medium">
+                                    <input type="radio" id="option1" name="taramaSecenekleri" checked />
+                                    <label for="option1" class="radio-label text-white text-sm font-medium leading-normal cursor-pointer">
+                                        Zorunlu Tarama
+                                    </label>
+                                </div>
+                                
+                                <div class="glass-dark rounded-xl p-4 transition-all duration-300 hover:bg-dark-medium">
+                                    <input type="radio" id="option2" name="taramaSecenekleri" />
+                                    <label for="option2" class="radio-label text-white text-sm font-medium leading-normal cursor-pointer">
+                                        Öncelikli Tarama
+                                    </label>
+                                </div>
+                                
+                                <div class="glass-dark rounded-xl p-4 transition-all duration-300 hover:bg-dark-medium">
+                                    <input type="radio" id="option3" name="taramaSecenekleri" />
+                                    <label for="option3" class="radio-label text-white text-sm font-medium leading-normal cursor-pointer">
+                                        Derinlemesine Tarama
+                                    </label>
+                                </div>
+                                
+                                <div class="glass-dark rounded-xl p-4 transition-all duration-300 hover:bg-dark-medium">
+                                    <input type="radio" id="option4" name="taramaSecenekleri" />
+                                    <label for="option4" class="radio-label text-white text-sm font-medium leading-normal cursor-pointer">
+                                        Hızlı Tarama
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Start Analysis Button -->
                     <div class="flex px-4 py-3">
-                        <button
-                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-[#f20d0d] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                            <span class="truncate">Analizi Başlat</span>
+                        <button class="flex justify-center items-center w-full rounded-xl h-12 px-6 bg-gradient-to-r from-primary to-secondary text-white text-base font-bold font-orbitron shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 relative overflow-hidden group">
+                            <span class="relative z-10">Analizi Başlat</span>
+                            <span class="absolute inset-0 bg-gradient-to-r from-secondary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                         </button>
                     </div>
 
-                    <h3 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Tarama
-                        Geçmişi</h3>
-                    <div class="px-4 py-3">
-                        <label class="flex flex-col min-w-40 h-12 w-full">
-                            <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
-                                <div class="text-[#cb9090] flex border-none bg-[#492222] items-center justify-center pl-4 rounded-l-xl"
-                                    data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                        fill="currentColor" viewBox="0 0 256 256">
-                                        <path
-                                            d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
-                                        </path>
+                    <!-- Scan History Section -->
+                    <div class="mt-8">
+                        <h3 class="text-white text-xl font-orbitron font-bold leading-tight tracking-wider pb-4 flex items-center">
+                            <span class="inline-block mr-2 size-5 bg-primary-light rounded-md"></span>
+                            Tarama Geçmişi
+                        </h3>
+                        
+                        <!-- Search by Hash -->
+                        <div class="px-4 py-3">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-primary-light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
                                     </svg>
                                 </div>
-                                <input placeholder="Hash ile Ara"
-                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#492222] focus:border-none h-full placeholder:text-[#cb9090] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" />
+                                <input type="text" placeholder="Hash ile Ara" class="w-full h-12 pl-12 pr-4 rounded-xl text-base bg-dark-light border border-primary/30 text-white focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all duration-200" />
                             </div>
-                        </label>
-                    </div>
-
-                    <div class="px-4 py-3 @container">
-                        <div class="flex overflow-hidden rounded-xl border border-[#683131] bg-[#231010]">
-                            <table class="flex-1">
-                                <thead>
-                                    <tr class="bg-[#341818]">
-                                        <th
-                                            class="table-col-120 px-4 py-3 text-left text-white w-[400px] text-sm font-medium leading-normal">
-                                            Dosya</th>
-                                        <th
-                                            class="table-col-240 px-4 py-3 text-left text-white w-60 text-sm font-medium leading-normal">
-                                            Tür</th>
-                                        <th
-                                            class="table-col-360 px-4 py-3 text-left text-white w-[400px] text-sm font-medium leading-normal">
-                                            Durum</th>
-                                        <th
-                                            class="table-col-480 px-4 py-3 text-left text-white w-[400px] text-sm font-medium leading-normal">
-                                            Analiz Süresi</th>
-                                        <th
-                                            class="table-col-600 px-4 py-3 text-left text-white w-60 text-[#cb9090] text-sm font-medium leading-normal">
-                                            İşlemler</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t border-t-[#683131]">
-                                        <td
-                                            class="table-col-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">
-                                            eicar.com</td>
-                                        <td
-                                            class="table-col-240 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                                            <button
-                                                class="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#492222] text-white text-sm font-medium w-full">
-                                                <span class="truncate">PE32</span>
-                                            </button>
-                                        </td>
-                                        <td
-                                            class="table-col-360 h-[72px] px-4 py-2 w-[400px] text-[#cb9090] text-sm font-normal leading-normal">
-                                            Tamamlandı</td>
-                                        <td
-                                            class="table-col-480 h-[72px] px-4 py-2 w-[400px] text-[#cb9090] text-sm font-normal leading-normal">
-                                            3 minutes</td>
-                                        <td
-                                            class="table-col-600 h-[72px] px-4 py-2 w-60 text-[#cb9090] text-sm font-bold leading-normal tracking-[0.015em] cursor-pointer">
-                                            Görüntüle
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-t-[#683131]">
-                                        <td
-                                            class="table-col-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">
-                                            example.exe</td>
-                                        <td
-                                            class="table-col-240 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                                            <button
-                                                class="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#492222] text-white text-sm font-medium w-full">
-                                                <span class="truncate">PE64</span>
-                                            </button>
-                                        </td>
-                                        <td
-                                            class="table-col-360 h-[72px] px-4 py-2 w-[400px] text-[#cb9090] text-sm font-normal leading-normal">
-                                            Tamamlandı</td>
-                                        <td
-                                            class="table-col-480 h-[72px] px-4 py-2 w-[400px] text-[#cb9090] text-sm font-normal leading-normal">
-                                            2 minutes</td>
-                                        <td
-                                            class="table-col-600 h-[72px] px-4 py-2 w-60 text-[#cb9090] text-sm font-bold leading-normal tracking-[0.015em] cursor-pointer">
-                                            Görüntüle
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                        <style>
-                            @container(max-width:120px) {
-                                .table-col-120 {
-                                    display: none;
-                                }
-                            }
 
-                            @container(max-width:240px) {
-                                .table-col-240 {
-                                    display: none;
-                                }
-                            }
-
-                            @container(max-width:360px) {
-                                .table-col-360 {
-                                    display: none;
-                                }
-                            }
-
-                            @container(max-width:480px) {
-                                .table-col-480 {
-                                    display: none;
-                                }
-                            }
-
-                            @container(max-width:600px) {
-                                .table-col-600 {
-                                    display: none;
-                                }
-                            }
-                        </style>
-                    </div>
-                </div>
-
-                <div class="layout-content-container flex flex-col">
-                    <div class="flex h-full min-h-[700px] flex-col justify-between bg-[#231010] p-4">
-                        <div class="flex flex-col gap-4">
-                            <h1 class="text-white text-base font-medium leading-normal">Yeni Analiz</h1>
-                            <div class="flex flex-col gap-2">
-                                <div class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white" data-icon="House" data-size="24px" data-weight="regular">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            fill="currentColor" viewBox="0 0 256 256">
-                                            <path
-                                                d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-white text-sm font-medium leading-normal">Dashboard</p>
-                                </div>
-                                <div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#492222]">
-                                    <div class="text-white" data-icon="File" data-size="24px" data-weight="fill">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            fill="currentColor" viewBox="0 0 256 256">
-                                            <path
-                                                d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-white text-sm font-medium leading-normal">Files</p>
-                                </div>
-                                <div class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white" data-icon="Compass" data-size="24px" data-weight="regular">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            fill="currentColor" viewBox="0 0 256 256">
-                                            <path
-                                                d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-white text-sm font-medium leading-normal">Pcap</p>
-                                </div>
-                                <div class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white" data-icon="Globe" data-size="24px" data-weight="regular">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            fill="currentColor" viewBox="0 0 256 256">
-                                            <path
-                                                d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM101.63,168h52.74C149,186.34,140,202.87,128,215.89,116,202.87,107,186.34,101.63,168ZM98,152a145.72,145.72,0,0,1,0-48h60a145.72,145.72,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.79a161.79,161.79,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154.37,88H101.63C107,69.66,116,53.13,128,40.11,140,53.13,149,69.66,154.37,88Zm19.84,16h38.46a88.15,88.15,0,0,1,0,48H174.21a161.79,161.79,0,0,0,0-48Zm32.16-16H170.94a142.39,142.39,0,0,0-20.26-45A88.37,88.37,0,0,1,206.37,88ZM105.32,43A142.39,142.39,0,0,0,85.06,88H49.63A88.37,88.37,0,0,1,105.32,43ZM49.63,168H85.06a142.39,142.39,0,0,0,20.26,45A88.37,88.37,0,0,1,49.63,168Zm101.05,45a142.39,142.39,0,0,0,20.26-45h35.43A88.37,88.37,0,0,1,150.68,213Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-white text-sm font-medium leading-normal">URLs</p>
-                                </div>
-                                <div class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white" data-icon="Hash" data-size="24px" data-weight="regular">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            fill="currentColor" viewBox="0 0 256 256">
-                                            <path
-                                                d="M224,88H175.4l8.47-46.57a8,8,0,0,0-15.74-2.86l-9,49.43H111.4l8.47-46.57a8,8,0,0,0-15.74-2.86L95.14,88H48a8,8,0,0,0,0,16H92.23L83.5,152H32a8,8,0,0,0,0,16H80.6l-8.47,46.57a8,8,0,0,0,6.44,9.3A7.79,7.79,0,0,0,80,224a8,8,0,0,0,7.86-6.57l9-49.43H144.6l-8.47,46.57a8,8,0,0,0,6.44,9.3A7.79,7.79,0,0,0,144,224a8,8,0,0,0,7.86-6.57l9-49.43H208a8,8,0,0,0,0-16H163.77l8.73-48H224a8,8,0,0,0,0-16Zm-76.5,64H99.77l8.73-48h47.73Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-white text-sm font-medium leading-normal">Hashes</p>
-                                </div>
-                                <div class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white" data-icon="Pi" data-size="24px" data-weight="regular">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                            fill="currentColor" viewBox="0 0 256 256">
-                                            <path
-                                                d="M232,172a36,36,0,0,1-72,0V72H96V200a8,8,0,0,1-16,0V72H72a40,40,0,0,0-40,40,8,8,0,0,1-16,0A56.06,56.06,0,0,1,72,56H224a8,8,0,0,1,0,16H176V172a20,20,0,0,0,40,0,8,8,0,0,1,16,0Z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-white text-sm font-medium leading-normal">IPs</p>
-                                </div>
+                        <!-- Scan History Table -->
+                        <div class="px-4 py-3 overflow-x-auto">
+                            <div class="rounded-xl overflow-hidden border border-primary/30 bg-dark-light">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr class="bg-dark-medium border-b border-primary/20">
+                                            <th class="px-6 py-4 text-left text-white text-sm font-orbitron">Dosya</th>
+                                            <th class="px-6 py-4 text-left text-white text-sm font-orbitron">Tür</th>
+                                            <th class="px-6 py-4 text-left text-white text-sm font-orbitron">Durum</th>
+                                            <th class="px-6 py-4 text-left text-white text-sm font-orbitron">Analiz Süresi</th>
+                                            <th class="px-6 py-4 text-left text-primary-light text-sm font-orbitron">İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-primary/10 hover:bg-dark-medium transition-colors duration-200">
+                                            <td class="h-16 px-6 py-4 text-white text-sm font-normal">eicar.com</td>
+                                            <td class="h-16 px-6 py-4">
+                                                <span class="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-primary/20 text-primary-light text-xs font-medium">
+                                                    PE32
+                                                </span>
+                                            </td>
+                                            <td class="h-16 px-6 py-4 text-primary-light text-sm font-normal">Tamamlandı</td>
+                                            <td class="h-16 px-6 py-4 text-primary-light text-sm font-normal">3 dakika</td>
+                                            <td class="h-16 px-6 py-4">
+                                                <button class="text-primary-light text-sm font-bold hover:text-white transition-colors duration-200">
+                                                    Görüntüle
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-dark-medium transition-colors duration-200">
+                                            <td class="h-16 px-6 py-4 text-white text-sm font-normal">example.exe</td>
+                                            <td class="h-16 px-6 py-4">
+                                                <span class="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-secondary/20 text-secondary text-xs font-medium">
+                                                    PE64
+                                                </span>
+                                            </td>
+                                            <td class="h-16 px-6 py-4 text-primary-light text-sm font-normal">Tamamlandı</td>
+                                            <td class="h-16 px-6 py-4 text-primary-light text-sm font-normal">2 dakika</td>
+                                            <td class="h-16 px-6 py-4">
+                                                <button class="text-primary-light text-sm font-bold hover:text-white transition-colors duration-200">
+                                                    Görüntüle
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <footer
-            class="px-10 py-4 border-t border-[#492222] text-center text-sm text-[#cb9090]"
-          >
-            <p>
-              © 2025 Sandbox Projesi - Tüm Hakları Saklıdır.
-            </p>
-          </footer>
+            <!-- Side Navigation Panel -->
+            <div class="lg:col-span-3">
+                <div class="glass rounded-2xl shadow-xl neon-border h-full">
+                    <div class="flex flex-col justify-between h-full p-6">
+                        <div class="flex flex-col gap-4">
+                            <h3 class="text-white text-lg font-orbitron font-bold">Yeni Analiz</h3>
+                            
+                            <div class="flex flex-col gap-2">
+                                <!-- Menu Items -->
+                                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/20 transition-colors duration-200">
+                                    <div class="text-primary-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-sm font-medium font-rajdhani">Dashboard</p>
+                                </a>
+                                
+                                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/20 transition-colors duration-200">
+                                    <div class="text-primary-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-sm font-medium font-rajdhani">Dosyalar</p>
+                                </a>
+                                
+                                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/20 transition-colors duration-200">
+                                    <div class="text-primary-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM172.42,72.84l-64,32a8.05,8.05,0,0,0-3.58,3.58l-32,64A8,8,0,0,0,80,184a8.1,8.1,0,0,0,3.58-.84l64-32a8.05,8.05,0,0,0,3.58-3.58l32-64a8,8,0,0,0-10.74-10.74ZM138,138,97.89,158.11,118,118l40.15-20.07Z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-sm font-medium font-rajdhani">Pcap</p>
+                                </a>
+                                
+                                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/20 transition-colors duration-200">
+                                    <div class="text-primary-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM101.63,168h52.74C149,186.34,140,202.87,128,215.89,116,202.87,107,186.34,101.63,168ZM98,152a145.72,145.72,0,0,1,0-48h60a145.72,145.72,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.79a161.79,161.79,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154.37,88H101.63C107,69.66,116,53.13,128,40.11,140,53.13,149,69.66,154.37,88Zm19.84,16h38.46a88.15,88.15,0,0,1,0,48H174.21a161.79,161.79,0,0,0,0-48Zm32.16-16H170.94a142.39,142.39,0,0,0-20.26-45A88.37,88.37,0,0,1,206.37,88ZM105.32,43A142.39,142.39,0,0,0,85.06,88H49.63A88.37,88.37,0,0,1,105.32,43ZM49.63,168H85.06a142.39,142.39,0,0,0,20.26,45A88.37,88.37,0,0,1,49.63,168Zm101.05,45a142.39,142.39,0,0,0,20.26-45h35.43A88.37,88.37,0,0,1,150.68,213Z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-sm font-medium font-rajdhani">URL'ler</p>
+                                </a>
+                                
+                                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/20 transition-colors duration-200">
+                                    <div class="text-primary-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M224,88H175.4l8.47-46.57a8,8,0,0,0-15.74-2.86l-9,49.43H111.4l8.47-46.57a8,8,0,0,0-15.74-2.86L95.14,88H48a8,8,0,0,0,0,16H92.23L83.5,152H32a8,8,0,0,0,0,16H80.6l-8.47,46.57a8,8,0,0,0,6.44,9.3A7.79,7.79,0,0,0,80,224a8,8,0,0,0,7.86-6.57l9-49.43H144.6l-8.47,46.57a8,8,0,0,0,6.44,9.3A7.79,7.79,0,0,0,144,224a8,8,0,0,0,7.86-6.57l9-49.43H208a8,8,0,0,0,0-16H163.77l8.73-48H224a8,8,0,0,0,0-16Zm-76.5,64H99.77l8.73-48h47.73Z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-sm font-medium font-rajdhani">Hash'ler</p>
+                                </a>
+                                
+                                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/20 transition-colors duration-200">
+                                    <div class="text-primary-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M232,172a36,36,0,0,1-72,0V72H96V200a8,8,0,0,1-16,0V72H72a40,40,0,0,0-40,40,8,8,0,0,1-16,0A56.06,56.06,0,0,1,72,56H224a8,8,0,0,1,0,16H176V172a20,20,0,0,0,40,0,8,8,0,0,1,16,0Z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="text-white text-sm font-medium font-rajdhani">IP'ler</p>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats Cards -->
+                        <div class="mt-8">
+                            <h3 class="text-white text-sm font-orbitron font-bold mb-3">İstatistikler</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="glass-dark p-3 rounded-xl flex flex-col items-center">
+                                    <p class="text-xs text-gray-400">Toplam Analiz</p>
+                                    <p class="text-xl font-bold text-primary-light">127</p>
+                                </div>
+                                <div class="glass-dark p-3 rounded-xl flex flex-col items-center">
+                                    <p class="text-xs text-gray-400">Kötücül</p>
+                                    <p class="text-xl font-bold text-secondary">43</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</body>
 
+        <!-- Footer -->
+        <footer class="glass mt-8 px-6 py-4 text-center text-sm text-gray-400 border-t border-primary/20">
+            <div class="container mx-auto">
+                <p>© 2025 Metaverse Sandbox Projesi - Tüm Hakları Saklıdır.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles"></div>
+
+    <script>
+        // Create floating particles
+        document.addEventListener("DOMContentLoaded", function() {
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < 30; i++) {
+                createParticle(particlesContainer);
+            }
+        });
+
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            
+            // Random size between 2px and 6px
+            const size = Math.random() * 4 + 2;
+            
+            // Random position
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            
+            // Random opacity
+            const opacity = Math.random() * 0.3 + 0.1;
+            
+            // Random animation duration between 15s and 30s
+            const duration = Math.random() * 15 + 15;
+            
+            // Set styles
+            particle.style.cssText = `
+                position: fixed;
+                width: ${size}px;
+                height: ${size}px;
+                background: linear-gradient(to right, rgba(138, 43, 226, ${opacity}), rgba(176, 38, 255, ${opacity}));
+                border-radius: 50%;
+                top: ${posY}%;
+                left: ${posX}%;
+                pointer-events: none;
+                z-index: -1;
+                animation: float ${duration}s ease-in-out infinite;
+                filter: blur(1px);
+            `;
+            
+            container.appendChild(particle);
+        }
+    </script>
+</body>
 </html>

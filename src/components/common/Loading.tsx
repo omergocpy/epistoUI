@@ -9,7 +9,7 @@ const Loading: React.FC = () => {
 
   return (
     <div style={overlayStyle}>
-      <div style={spinnerStyle}>Loading...</div>
+      <div style={spinnerStyle}>Yükleniyor...</div>
     </div>
   );
 };

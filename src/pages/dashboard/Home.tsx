@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     >
       <HeaderDashboard />
       <main className="px-10 py-6 max-w-[1200px] mx-auto w-full">
-        <h1 className="text-2xl font-bold mb-4">Hoş Geldiniz, Ali Demir!</h1>
+        <h1 className="text-2xl font-bold mb-4">Hoş Geldiniz, Ece Demir!</h1>
         <p className="text-sm text-[#cb9090] mb-8">
           Başarılı bir şekilde giriş yaptınız. Buradan son güncellemeleri görüntüleyebilir veya hızlıca yeni analiz başlatabilirsiniz.
         </p>
